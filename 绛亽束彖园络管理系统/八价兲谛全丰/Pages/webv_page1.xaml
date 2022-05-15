@@ -1,0 +1,73 @@
+﻿<Page
+    x:Class="绛亽束彖园络管理系统.webv_page1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:绛亽束彖园络管理系统"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="webv_page1"
+    d:DesignHeight="450"
+    d:DesignWidth="1000"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <local:WebView2Controlers x:Key="WebView2Controlers" />
+
+    </Page.Resources>
+
+
+    <Grid x:Name="grid">
+
+        <Wpf:WebView2
+            Name="webview2"
+            Height="Auto"
+            MinWidth="400"
+            MinHeight="200"
+            Margin="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Panel.ZIndex="1"
+            IsManipulationEnabled="True"
+            Source="{Binding Source={StaticResource WebView2Controlers}, Path=Current, Mode=TwoWay}" />
+        <StackPanel VerticalAlignment="Center">
+            <Button
+                Margin="20"
+                materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                materialDesign:ButtonProgressAssist.Value="-1"
+                Content="&#xe79e;"
+                FontFamily="{StaticResource iconfontSC}"
+                FontSize="44"
+                Foreground="Orange"
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                Style="{StaticResource MaterialDesignFloatingActionLightButton}" />
+            <ProgressBar
+                Name="progressBar1"
+                Width="90"
+                Height="9"
+                Margin="9"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                FontSize="0.1"
+                IsIndeterminate="True"
+                Maximum="666666">
+                <ProgressBar.Value>
+                    666666
+                </ProgressBar.Value>
+            </ProgressBar>
+            <TextBlock
+                Margin="10"
+                HorizontalAlignment="Center"
+                Background="#00000000"
+                FontFamily="{StaticResource uiSC}"
+                FontSize="0.1"
+                Foreground="#aaa">
+                loading ~ ~ ~
+            </TextBlock>
+        </StackPanel>
+
+
+    </Grid>
+
+</Page>

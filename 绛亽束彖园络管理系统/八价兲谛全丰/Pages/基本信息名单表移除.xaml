@@ -1,0 +1,130 @@
+﻿<Page
+    x:Class="绛亽束彖园络管理系统.基本信息名单表移除"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:绛亽束彖园络管理系统"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="基本信息名单表移除"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Background="#dee3f4"
+    mc:Ignorable="d">
+
+    <Viewbox>
+        <Grid x:Name="topgrid">
+            <ScrollViewer
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                FontSize="18"
+                HorizontalScrollBarVisibility="Visible"
+                VerticalScrollBarVisibility="Hidden">
+                <ScrollViewer.Content>
+                    <StackPanel Margin="0">
+                        <!--<TextBlock
+                    Margin="20"
+                    HorizontalAlignment="Center"
+                    FontSize="16">
+                    基本信息名单表移除
+                </TextBlock>-->
+                        <WrapPanel
+                            MinWidth="400"
+                            Margin="0"
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal">
+                            <ComboBox
+                                x:Name="cb_db"
+                                MinWidth="200"
+                                MinHeight="35"
+                                MaxWidth="400"
+                                Margin="0,20"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                materialDesign:HintAssist.Hint="数据库名"
+                                FontFamily="{StaticResource monoSC}"
+                                IsEditable="False"
+                                IsTextSearchEnabled="True"
+                                PreviewMouseWheel="cb_db_PreviewMouseWheel"
+                                SelectionChanged="cb_db_SelectionChanged"
+                                Style="{StaticResource MaterialDesignComboBox}" />
+                            <!--<TextBlock>表名</TextBlock>-->
+                            <ComboBox
+                                x:Name="tb_表名"
+                                MinWidth="{Binding ElementName=cb_db, Path=MinWidth}"
+                                MinHeight="{Binding ElementName=cb_db, Path=MinHeight}"
+                                MaxWidth="{Binding ElementName=cb_db, Path=MaxWidth}"
+                                Margin="{Binding ElementName=cb_db, Path=Margin}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                materialDesign:HintAssist.Hint="表名"
+                                IsEditable="True"
+                                IsTextSearchEnabled="True"
+                                KeyUp="tb_表名_KeyUp"
+                                PreviewMouseWheel="tb_表名_PreviewMouseWheel" />
+                        </WrapPanel>
+                        <WrapPanel
+                            MinWidth="400"
+                            Margin="0"
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal">
+                            <!--<TextBlock>元氏</TextBlock>-->
+                            <ComboBox
+                                x:Name="tb1"
+                                Width="Auto"
+                                MinWidth="{Binding ElementName=cb_db, Path=MinWidth}"
+                                MinHeight="{Binding ElementName=cb_db, Path=MinHeight}"
+                                MaxWidth="{Binding ElementName=cb_db, Path=MaxWidth}"
+                                Margin="{Binding ElementName=cb_db, Path=Margin}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                materialDesign:HintAssist.Hint="元氏"
+                                IsEditable="True"
+                                IsTextSearchEnabled="True"
+                                KeyUp="tb1_KeyUp"
+                                PreviewMouseWheel="tb1_PreviewMouseWheel"
+                                SelectionChanged="tb1_SelectionChanged" />
+                            <!--<TextBlock>名字</TextBlock>-->
+                            <ComboBox
+                                x:Name="tb2"
+                                Width="Auto"
+                                MinWidth="{Binding ElementName=cb_db, Path=MinWidth}"
+                                MinHeight="{Binding ElementName=cb_db, Path=MinHeight}"
+                                MaxWidth="{Binding ElementName=cb_db, Path=MaxWidth}"
+                                Margin="{Binding ElementName=cb_db, Path=Margin}"
+                                HorizontalAlignment="Center"
+                                materialDesign:HintAssist.Hint="名字"
+                                FocusableChanged="tb2_FocusableChanged"
+                                IsEditable="True"
+                                IsTextSearchEnabled="False"
+                                KeyDown="tb2_KeyDown"
+                                KeyUp="tb2_KeyDown"
+                                PreviewMouseWheel="tb2_PreviewMouseWheel" />
+                            <!--  IsTextSearchEnabled="False" ：避免干扰  -->
+                        </WrapPanel>
+
+                        <WrapPanel
+                            Margin="0,20"
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal">
+                            <Button Width="220" Click="Button_Click1">
+                                从剪贴板批量提交
+                            </Button>
+                            <Button Width="220" Click="Button_Click_1">
+                                快速清除表记录
+                            </Button>
+                            <Button Width="220" Click="Button_Click">提交</Button>
+                        </WrapPanel>
+                        <TextBlock
+                            x:Name="tb3"
+                            HorizontalAlignment="Center"
+                            Foreground="Gray" />
+
+                    </StackPanel>
+                </ScrollViewer.Content>
+            </ScrollViewer>
+        </Grid>
+    </Viewbox>
+</Page>

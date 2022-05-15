@@ -1,0 +1,761 @@
+﻿<Window
+    x:Class="绛亽束彖园络管理系统.八价兲谛全丰专区"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:绛亽束彖园络管理系统"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{Binding ElementName=wintitle, Path=Text, Mode=OneWay}"
+    Width="1400"
+    Height="700"
+    MinWidth="480"
+    MinHeight="250"
+    FontFamily="{StaticResource monoSC}"
+    ResizeMode="CanResize"
+    TextBlock.TextAlignment="Center"
+    WindowChrome.WindowChrome="{DynamicResource WindowChromeKey}"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <local:WinTitle x:Key="WinTitle" />
+        <local:WebView2Controlers x:Key="WebView2Controlers" />
+        <WindowChrome x:Key="WindowChromeKey">
+            <WindowChrome.ResizeBorderThickness>
+                <Thickness>8</Thickness>
+            </WindowChrome.ResizeBorderThickness>
+        </WindowChrome>
+        <Style x:Key="RadioButtonStyle" TargetType="{x:Type RadioButton}">
+            <Setter Property="FocusVisualStyle">
+                <Setter.Value>
+                    <Style>
+                        <Setter Property="Control.Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Rectangle
+                                        Margin="2"
+                                        SnapsToDevicePixels="True"
+                                        Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                                        StrokeDashArray="1 2"
+                                        StrokeThickness="1" />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Margin" Value="0,2,0,0" />
+            <Setter Property="FontSize" Value="26" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        <Grid
+                            x:Name="templateRoot"
+                            Background="Transparent"
+                            SnapsToDevicePixels="True">
+                            <Border
+                                x:Name="border"
+                                BorderBrush="Red"
+                                BorderThickness="0"
+                                SnapsToDevicePixels="True" />
+                            <Border x:Name="bd2" />
+                            <ContentPresenter
+                                x:Name="contentPresenter"
+                                Grid.Column="1"
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Content="{TemplateBinding Content}"
+                                ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Focusable="False"
+                                RecognizesAccessKey="True"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasContent" Value="True">
+                                <Setter Property="FocusVisualStyle">
+                                    <Setter.Value>
+                                        <Style>
+                                            <Setter Property="Control.Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Rectangle
+                                                            Margin="14,0,0,0"
+                                                            SnapsToDevicePixels="True"
+                                                            Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                                                            StrokeDashArray="1 2"
+                                                            StrokeThickness="1" />
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Padding" Value="4,-1,0,0" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#F7F7F7" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter Property="Foreground" Value="Green" />
+                                <Setter TargetName="bd2" Property="BorderThickness" Value="4,0,0,0" />
+                                <Setter TargetName="bd2" Property="BorderBrush" Value="Green" />
+                                <Setter TargetName="border" Property="Background" Value="Green" />
+                                <Setter TargetName="border" Property="Opacity" Value="0.05" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="{x:Null}" />
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="MinHeight" Value="44" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>
+
+    </Window.Resources>
+
+
+    <materialDesign:DrawerHost
+        x:Name="DrawerHost"
+        Grid.Row="0"
+        Grid.RowSpan="2"
+        Grid.Column="0"
+        Grid.ColumnSpan="2"
+        Margin="0"
+        BorderBrush="{DynamicResource MaterialDesignDivider}"
+        BorderThickness="0"
+        BottomDrawerBackground="{DynamicResource SecondaryHueLightBrush}"
+        BottomDrawerCornerRadius="20 20 0 0"
+        DockPanel.Dock="Left">
+        <materialDesign:DrawerHost.Style>
+            <Style BasedOn="{StaticResource {x:Type materialDesign:DrawerHost}}" TargetType="materialDesign:DrawerHost">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsChecked, ElementName=BackgroundToggle}" Value="True">
+                        <Setter Property="OverlayBackground" Value="{DynamicResource PrimaryHueMidBrush}" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </materialDesign:DrawerHost.Style>
+        <!--  // 左边 //  -->
+        <materialDesign:DrawerHost.LeftDrawerContent>
+
+            <Grid
+                x:Name="drawer_menu_grid"
+                Width="200"
+                Background="#dee3f4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="42" />
+                    <ColumnDefinition Width="158" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <ScrollViewer
+                    Grid.ColumnSpan="2"
+                    HorizontalScrollBarVisibility="Hidden"
+                    VerticalScrollBarVisibility="Hidden">
+
+                    <StackPanel
+                        x:Name="drawer_menu"
+                        Grid.ColumnSpan="2"
+                        Width="{Binding ElementName=menu_grid, Path=Width, Mode=OneTime}"
+                        Margin="0"
+                        Background="#dee3f4"
+                        CanVerticallyScroll="True">
+                        <TextBlock Margin="16" />
+                        <RadioButton Style="{DynamicResource RadioButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    FontFamily="{Binding ElementName=icon_系统设置, Path=FontFamily, Mode=OneTime}"
+                                    FontSize="{Binding ElementName=icon_系统设置, Path=FontSize, Mode=OneTime}"
+                                    Foreground="Green"
+                                    Text="&#xe93c;" />
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}"
+                                    Text="数据浏览" />
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton Style="{DynamicResource RadioButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    FontFamily="{Binding ElementName=icon_系统设置, Path=FontFamily, Mode=OneTime}"
+                                    FontSize="{Binding ElementName=icon_系统设置, Path=FontSize, Mode=OneTime}"
+                                    Foreground="#CD3700"
+                                    Text="&#xe93c;" />
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}"
+                                    Text="活动安排" />
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton Style="{DynamicResource RadioButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    FontFamily="{Binding ElementName=icon_系统设置, Path=FontFamily, Mode=OneTime}"
+                                    FontSize="{Binding ElementName=icon_系统设置, Path=FontSize, Mode=OneTime}"
+                                    Foreground="Green"
+                                    Text="&#xe93c;" />
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}"
+                                    Text="任务下载" />
+                            </StackPanel>
+                        </RadioButton>
+
+                        <Border
+                            Margin="10"
+                            BorderBrush="#EAEAEA"
+                            BorderThickness="0,1,0,0" />
+
+                        <RadioButton Style="{DynamicResource RadioButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    FontFamily="{Binding ElementName=icon_系统设置, Path=FontFamily, Mode=OneTime}"
+                                    FontSize="{Binding ElementName=icon_系统设置, Path=FontSize, Mode=OneTime}"
+                                    Foreground="#6074C2"
+                                    Text="&#xe93c;" />
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}"
+                                    Text="八价兲谛全丰专区" />
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton Style="{DynamicResource RadioButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    FontFamily="{Binding ElementName=icon_系统设置, Path=FontFamily, Mode=OneTime}"
+                                    FontSize="{Binding ElementName=icon_系统设置, Path=FontSize, Mode=OneTime}"
+                                    Foreground="#6074C2"
+                                    Text="&#xe62d;" />
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}"
+                                    Text="帮助文档" />
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton Style="{DynamicResource RadioButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    FontFamily="{StaticResource iconfontSC}"
+                                    FontSize="22"
+                                    Foreground="#6074C2"
+                                    Text="&#xe817;" />
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}"
+                                    Text="系统设置" />
+                            </StackPanel>
+                        </RadioButton>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </materialDesign:DrawerHost.LeftDrawerContent>
+        <!--  // 顶部 //  -->
+        <materialDesign:DrawerHost.TopDrawerContent>
+            <WrapPanel
+                Width="{Binding ElementName=DrawerHost, Path=ActualWidth}"
+                Margin="0"
+                HorizontalAlignment="Center"
+                Background="#dee3f4"
+                Orientation="Horizontal">
+                <TextBlock
+                    Margin="220,0,0,0"
+                    VerticalAlignment="Center"
+                    Text="TOP BANANA" />
+                <Button
+                    Margin="4"
+                    HorizontalAlignment="Center"
+                    Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                    CommandParameter="{x:Static Dock.Right}"
+                    Content="CLOSE THIS"
+                    Style="{StaticResource MaterialDesignFlatButton}" />
+                <Button
+                    Margin="4"
+                    HorizontalAlignment="Center"
+                    Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                    Content="CLOSE ALL"
+                    Style="{StaticResource MaterialDesignFlatButton}" />
+
+            </WrapPanel>
+        </materialDesign:DrawerHost.TopDrawerContent>
+        <!--  // 右边 //  -->
+        <materialDesign:DrawerHost.RightDrawerContent>
+            <StackPanel Margin="0" Background="#dee3f4">
+                <TextBlock Margin="16" />
+                <TextBlock
+                    Margin="4"
+                    HorizontalAlignment="Center"
+                    Text="THE RIGHT STUFF" />
+                <Button
+                    Margin="4"
+                    HorizontalAlignment="Center"
+                    Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                    CommandParameter="{x:Static Dock.Right}"
+                    Content="CLOSE THIS"
+                    Style="{StaticResource MaterialDesignFlatButton}" />
+                <Button
+                    Margin="4"
+                    HorizontalAlignment="Center"
+                    Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                    Content="CLOSE ALL"
+                    Style="{StaticResource MaterialDesignFlatButton}" />
+            </StackPanel>
+        </materialDesign:DrawerHost.RightDrawerContent>
+        <materialDesign:DrawerHost.BottomDrawerContent>
+            <StackPanel
+                Margin="0"
+                HorizontalAlignment="Center"
+                Orientation="Horizontal">
+                <TextBlock
+                    Margin="4"
+                    VerticalAlignment="Center"
+                    Foreground="{DynamicResource SecondaryHueLightBrushForeground}"
+                    Text="BOTTOM BRACKET" />
+                <Button
+                    Margin="4"
+                    VerticalAlignment="Center"
+                    Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                    Content="CLOSE ALL"
+                    Style="{StaticResource MaterialDesignFlatButton}" />
+                <Button
+                    Margin="4"
+                    VerticalAlignment="Center"
+                    Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                    CommandParameter="{x:Static Dock.Bottom}"
+                    Content="CLOSE THIS"
+                    Style="{StaticResource MaterialDesignFlatButton}" />
+            </StackPanel>
+        </materialDesign:DrawerHost.BottomDrawerContent>
+        <!--  // 主Grid //  -->
+        <Grid x:Name="main_grid" Background="#dee3f4">
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="main_head" Height="33" />
+                <RowDefinition x:Name="main_r0" />
+                <RowDefinition Height="0.005*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    x:Name="main_c0"
+                    Width="{Binding ElementName=menu_grid, Path=ActualWidth, Mode=OneWay}"
+                    MinWidth="{Binding ElementName=menu_c0, Path=ActualWidth, Mode=OneTime}" />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition Width="{Binding ElementName=main_c0, Path=ActualWidth, Mode=OneWay}" MinWidth="100" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.Row="2" Background="#dee3f4" />
+            <!--<Border Grid.Row="1" Background="green" />-->
+            <TextBlock
+                x:Name="wintitle"
+                Text="{Binding Source={StaticResource WinTitle}, Path=窗口标题}"
+                Visibility="Collapsed" />
+            <StackPanel
+                x:Name="标题容器"
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="4"
+                Width="2000"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom">
+                <TextBlock
+                    x:Name="标题就是我"
+                    MaxWidth="1000"
+                    VerticalAlignment="Bottom"
+                    FontSize="18"
+                    Foreground="#444"
+                    Text="{Binding Source={StaticResource WinTitle}, Path=窗口标题}" />
+            </StackPanel>
+            <StackPanel
+                x:Name="副标题容器"
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Width="1000"
+                Margin="10,4,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom">
+                <TextBlock
+                    x:Name="副标题就是我"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    FontSize="18"
+                    Foreground="#449"
+                    Text="{Binding Source={StaticResource WinTitle}, Path=副窗口标题}" />
+            </StackPanel>
+            <WrapPanel
+                Grid.Row="0"
+                Grid.Column="3"
+                Margin="0,0,6,3"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom">
+                <TextBlock
+                    x:Name="tb_head_min"
+                    Margin="0,0,8,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Cursor="Hand"
+                    FontFamily="{StaticResource iconfontSC}"
+                    FontSize="20"
+                    Foreground="DarkOrange"
+                    MouseEnter="min_MouseEnter"
+                    MouseLeave="min_MouseLeave"
+                    MouseLeftButtonDown="HeadMin_MouseLeftButtonDown"
+                    Text="&#xe608;"
+                    ToolTip="最小化"
+                    WindowChrome.IsHitTestVisibleInChrome="True" />
+                <TextBlock
+                    x:Name="tb_head_max"
+                    Margin="{Binding ElementName=tb_head_min, Path=Margin}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Cursor="Hand"
+                    FontFamily="{StaticResource iconfontSC}"
+                    FontSize="{Binding ElementName=tb_head_min, Path=FontSize}"
+                    Foreground="Green"
+                    MouseEnter="max_MouseEnter"
+                    MouseLeave="max_MouseLeave"
+                    MouseLeftButtonDown="HeadMax_MouseLeftButtonDown"
+                    Text="&#xe608;"
+                    ToolTip="最大化/还原"
+                    WindowChrome.IsHitTestVisibleInChrome="True" />
+                <TextBlock
+                    x:Name="tb_head_close"
+                    Margin="{Binding ElementName=tb_head_min, Path=Margin}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Cursor="Hand"
+                    FontFamily="{StaticResource iconfontSC}"
+                    FontSize="{Binding ElementName=tb_head_min, Path=FontSize}"
+                    Foreground="#fd5858"
+                    MouseEnter="close_MouseEnter"
+                    MouseLeave="close_MouseLeave"
+                    MouseLeftButtonDown="HeadClose_MouseLeftButtonDown"
+                    Text="&#xe608;"
+                    ToolTip="关闭"
+                    WindowChrome.IsHitTestVisibleInChrome="True" />
+            </WrapPanel>
+            <Grid
+                x:Name="menu_grid"
+                Grid.Row="1"
+                Width="200"
+                Background="#dee3f4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="menu_c0" Width="42" />
+                    <ColumnDefinition x:Name="menu_c1" Width="158" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="200" />
+                </Grid.RowDefinitions>
+
+                <ScrollViewer
+                    Grid.ColumnSpan="2"
+                    HorizontalScrollBarVisibility="Hidden"
+                    VerticalScrollBarVisibility="Hidden">
+                    <StackPanel Grid.ColumnSpan="2">
+                        <TextBlock
+                            x:Name="via"
+                            Margin="15,15,0,20"
+                            HorizontalAlignment="Left"
+                            FontFamily="{StaticResource uiSC}"
+                            FontSize="15"
+                            Foreground="#8F8F8F"
+                            Text="Power by Hi-Windom" />
+
+                        <RadioButton Grid.ColumnSpan="2" Style="{DynamicResource RadioButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Margin="10,0,0,0"
+                                    FontFamily="{Binding ElementName=icon_系统设置, Path=FontFamily, Mode=OneTime}"
+                                    FontSize="{Binding ElementName=icon_系统设置, Path=FontSize, Mode=OneTime}"
+                                    Foreground="Green"
+                                    Text="&#xe93c;" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}"
+                                    Text="我的清单" />
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton Style="{DynamicResource RadioButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    FontFamily="{Binding ElementName=icon_系统设置, Path=FontFamily, Mode=OneTime}"
+                                    FontSize="{Binding ElementName=icon_系统设置, Path=FontSize, Mode=OneTime}"
+                                    Foreground="#CD3700"
+                                    Text="&#xe93c;" />
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}"
+                                    Text="制定计划" />
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton Style="{DynamicResource RadioButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    FontFamily="{Binding ElementName=icon_系统设置, Path=FontFamily, Mode=OneTime}"
+                                    FontSize="{Binding ElementName=icon_系统设置, Path=FontSize, Mode=OneTime}"
+                                    Foreground="Green"
+                                    Text="&#xe93c;" />
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}"
+                                    Text="数据浏览" />
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton Style="{DynamicResource RadioButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    FontFamily="{Binding ElementName=icon_系统设置, Path=FontFamily, Mode=OneTime}"
+                                    FontSize="{Binding ElementName=icon_系统设置, Path=FontSize, Mode=OneTime}"
+                                    Foreground="#CD3700"
+                                    Text="&#xe93c;" />
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}"
+                                    Text="活动安排" />
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton Style="{DynamicResource RadioButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    FontFamily="{Binding ElementName=icon_系统设置, Path=FontFamily, Mode=OneTime}"
+                                    FontSize="{Binding ElementName=icon_系统设置, Path=FontSize, Mode=OneTime}"
+                                    Foreground="Green"
+                                    Text="&#xe93c;" />
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}"
+                                    Text="任务下载" />
+                            </StackPanel>
+                        </RadioButton>
+
+                        <Border
+                            Margin="10"
+                            BorderBrush="#EAEAEA"
+                            BorderThickness="0,1,0,0" />
+
+                        <RadioButton x:Name="RB_八价兲谛全丰专区" Style="{DynamicResource RadioButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    FontFamily="{Binding ElementName=icon_系统设置, Path=FontFamily, Mode=OneTime}"
+                                    FontSize="{Binding ElementName=icon_系统设置, Path=FontSize, Mode=OneTime}"
+                                    Foreground="#6074C2"
+                                    Text="&#xe93c;" />
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}"
+                                    Text="八价兲谛全丰专区" />
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton x:Name="帮助文档" Style="{DynamicResource RadioButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    FontFamily="{Binding ElementName=icon_系统设置, Path=FontFamily, Mode=OneTime}"
+                                    FontSize="{Binding ElementName=icon_系统设置, Path=FontSize, Mode=OneTime}"
+                                    Foreground="#6074C2"
+                                    Text="&#xe62d;" />
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}"
+                                    Text="帮助文档" />
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton Style="{DynamicResource RadioButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    x:Name="icon_系统设置"
+                                    Margin="10,0,0,0"
+                                    FontFamily="{StaticResource iconfontSC}"
+                                    FontSize="22"
+                                    Foreground="#6074C2"
+                                    Text="&#xe817;" />
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}"
+                                    Text="系统设置" />
+                            </StackPanel>
+                        </RadioButton>
+
+                    </StackPanel>
+                </ScrollViewer>
+                <StackPanel
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    Margin="4,10,0,0"
+                    MouseLeftButtonDown="ShowHiddenMenu"
+                    Orientation="Vertical">
+                    <ComboBox
+                        x:Name="drawer_OpenMode"
+                        Margin="5"
+                        PreviewMouseMove="drawer_OpenMode_PreviewMouseMove"
+                        SelectedValue="{Binding OpenMode, ElementName=DrawerHost}"
+                        SelectedValuePath="Content">
+                        <ComboBoxItem Content="{x:Static materialDesign:DrawerHostOpenMode.Modal}" Selector.IsSelected="True" />
+                        <ComboBoxItem Content="{x:Static materialDesign:DrawerHostOpenMode.Standard}" />
+                    </ComboBox>
+                    <Grid
+                        Height="100"
+                        Margin="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Button
+                            x:Name="aleft"
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            MaxWidth="45"
+                            Margin="4"
+                            Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                            CommandParameter="{x:Static Dock.Left}"
+                            Style="{StaticResource MaterialDesignFlatDarkBgButton}" />
+                        <Button
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            MaxWidth="{Binding ElementName=aleft, Path=MaxWidth}"
+                            Margin="4"
+                            Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                            CommandParameter="{x:Static Dock.Top}"
+                            Style="{StaticResource MaterialDesignFlatDarkBgButton}" />
+                        <Button
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            MaxWidth="{Binding ElementName=aleft, Path=MaxWidth}"
+                            Margin="4"
+                            Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                            CommandParameter="{x:Static Dock.Right}"
+                            Style="{StaticResource MaterialDesignFlatDarkBgButton}" />
+                        <Button
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            MaxWidth="{Binding ElementName=aleft, Path=MaxWidth}"
+                            Margin="4"
+                            Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                            CommandParameter="{x:Static Dock.Bottom}"
+                            Style="{StaticResource MaterialDesignFlatDarkBgButton}" />
+                        <Button
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            MaxWidth="{Binding ElementName=aleft, Path=MaxWidth}"
+                            Margin="4"
+                            Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                            Style="{StaticResource MaterialDesignRaisedAccentButton}" />
+                    </Grid>
+
+                    <StackPanel Margin="0,10" Orientation="Horizontal">
+                        <TextBlock
+                            x:Name="Directory_BT"
+                            Margin="8,0,0,16"
+                            VerticalAlignment="Center"
+                            FontFamily="{Binding ElementName=icon_系统设置, Path=FontFamily, Mode=OneTime}"
+                            FontSize="30"
+                            Foreground="#CD3700"
+                            Text="&#xe6ad;" />
+                        <TextBlock
+                            Margin="{Binding ElementName=Directory_BT, Path=Margin, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource uiSC}"
+                            FontSize="24"
+                            FontWeight="Light"
+                            Foreground="#CD3700"
+                            Text="Close Menu           " />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+            <Border
+                Grid.Row="2"
+                Grid.Column="1"
+                Background="#dee3f4" />
+            <Border
+                Grid.Row="2"
+                Grid.Column="2"
+                Background="#dee3f4" />
+            <Border
+                Grid.Row="2"
+                Grid.Column="3"
+                Background="#dee3f4" />
+            <Grid
+                x:Name="f1_dad"
+                Grid.Row="1"
+                Grid.Column="1"
+                Grid.ColumnSpan="3">
+                <Frame
+                    x:Name="frame1"
+                    materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                    materialDesign:ShadowAssist.ShadowEdges="Bottom,Left"
+                    NavigationUIVisibility="Visible"
+                    Source="{Binding Source={StaticResource WinTitle}, Path=URI, Mode=OneWay}"
+                    Template="{StaticResource fram_t1}" />
+
+            </Grid>
+        </Grid>
+    </materialDesign:DrawerHost>
+</Window>

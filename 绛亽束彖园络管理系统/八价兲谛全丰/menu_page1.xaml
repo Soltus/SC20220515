@@ -1,0 +1,54 @@
+﻿<Page
+    x:Class="绛亽束彖园络管理系统.menu_page1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:绛亽束彖园络管理系统"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="菜单页"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    FontSize="24"
+    mc:Ignorable="d">
+
+    <Viewbox>
+        <Grid x:Name="menu_page1_root" Background="#dee3f4">
+            <WrapPanel
+                Margin="10"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
+                <TextBlock
+                    x:Name="tb1"
+                    Margin="28,8,28,8"
+                    TextWrapping="Wrap">
+                    <Hyperlink x:Name="增删基本信息名单表" NavigateUri="Pages/增删基本信息名单表.xaml">
+                        增删基本信息名单表
+                    </Hyperlink>
+                </TextBlock>
+                <TextBlock Margin="{Binding ElementName=tb1, Path=Margin}" TextWrapping="Wrap">
+                    <Hyperlink x:Name="基本信息名单表录入" NavigateUri="Pages/基本信息名单表录入.xaml">
+                        基本信息名单表录入
+                    </Hyperlink>
+                </TextBlock>
+                <TextBlock Margin="{Binding ElementName=tb1, Path=Margin}" TextWrapping="Wrap">
+                    <Hyperlink x:Name="基本信息名单表移除" NavigateUri="Pages/基本信息名单表移除.xaml">
+                        基本信息名单表移除
+                    </Hyperlink>
+                </TextBlock>
+                <TextBlock Margin="{Binding ElementName=tb1, Path=Margin}" TextWrapping="Wrap">
+                    <Hyperlink
+                        x:Name="基本信息表查询"
+                        NavigateUri="Pages/基本信息表查询.xaml">
+                        基本信息表查询
+                    </Hyperlink>
+                </TextBlock>
+                <TextBlock Margin="{Binding ElementName=tb1, Path=Margin}" TextWrapping="Wrap">
+                    <Hyperlink x:Name="基本信息表集合运算" NavigateUri="Pages/基本信息表集合运算.xaml">
+                        基本信息表集合运算（将在后续版本实现）
+                    </Hyperlink>
+                </TextBlock>
+            </WrapPanel>
+        </Grid>
+    </Viewbox>
+</Page>

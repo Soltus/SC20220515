@@ -1,0 +1,89 @@
+﻿<Window
+    x:Class="绛亽束彖园络管理系统.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:绛亽束彖园络管理系统"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tb="http://www.hardcodet.net/taskbar"
+    Title="绛亽束彖园络管理系统"
+    Width="900"
+    Height="650"
+    mc:Ignorable="d">
+    <materialDesign:DialogHost>
+        <Grid>
+            <Grid.Resources>
+                <local:ShowMessageCommand x:Key="MessageCommand" />
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="58" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.2*" />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Border Background="red" />
+            <Border Grid.Row="1" Background="green" />
+            <Border
+                Grid.Column="1"
+                Grid.ColumnSpan="3"
+                Background="Yellow" />
+            <Viewbox
+                Grid.Row="1"
+                Grid.Column="1"
+                Grid.ColumnSpan="3">
+                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+                    <ScrollViewer.Content>
+                        <UniformGrid>
+                            <Button
+                                x:Name="logout"
+                                Width="Auto"
+                                Margin="20"
+                                Click="Button_Click"
+                                Content="注销登录"
+                                Style="{StaticResource MaterialDesignFlatDarkBgButton}" />
+                            <Button
+                                Width="Auto"
+                                Margin="{Binding ElementName=logout, Path=Margin}"
+                                Click="八价兲谛全丰专区_Click"
+                                Content="八价兲谛全丰专区"
+                                Style="{StaticResource MaterialDesignFlatDarkBgButton}" />
+                            <Button
+                                Width="Auto"
+                                Margin="{Binding ElementName=logout, Path=Margin}"
+                                Content="Wallpaper Engine 专区"
+                                IsEnabled="False"
+                                Style="{StaticResource MaterialDesignFlatDarkBgButton}" />
+                            <Button
+                                Width="Auto"
+                                Margin="{Binding ElementName=logout, Path=Margin}"
+                                Content="绿色软件专区"
+                                IsEnabled="False"
+                                Style="{StaticResource MaterialDesignFlatDarkBgButton}" />
+                            <Button
+                                Width="Auto"
+                                Margin="{Binding ElementName=logout, Path=Margin}"
+                                Content="杂项"
+                                IsEnabled="False"
+                                Style="{StaticResource MaterialDesignFlatDarkBgButton}" />
+                        </UniformGrid>
+                    </ScrollViewer.Content>
+                </ScrollViewer>
+            </Viewbox>
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Bottom">
+                    <TextBlock
+                        x:Name="连接的实例"
+                        Width="200"
+                        Height="30"
+                        Text="" />
+                </StackPanel>
+            </DockPanel>
+        </Grid>
+    </materialDesign:DialogHost>
+
+</Window>

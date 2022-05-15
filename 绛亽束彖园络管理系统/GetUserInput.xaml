@@ -1,0 +1,65 @@
+﻿<Window
+    x:Class="绛亽束彖园络管理系统.GetUserInput"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:绛亽束彖园络管理系统"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="GetUserInput"
+    Width="800"
+    Height="300"
+    AllowsTransparency="True"
+    Background="#00000000"
+    Opacity="0.95"
+    ResizeMode="NoResize"
+    ShowInTaskbar="True"
+    Topmost="True"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Viewbox>
+        <Grid>
+            <StackPanel>
+                <TextBox
+                    x:Name="id"
+                    MinWidth="600"
+                    MaxWidth="780"
+                    MaxHeight="280"
+                    Margin="10"
+                    materialDesign:HintAssist.Hint=" Full URL / JavaScript Content"
+                    AcceptsReturn="True"
+                    AcceptsTab="True"
+                    FontFamily="{StaticResource monoSC}"
+                    FontSize="16"
+                    Foreground="Snow"
+                    Background="#222"
+                    MaxLength="50000"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    TextWrapping="Wrap" />
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Button
+                        MaxWidth="60"
+                        Margin="10"
+                        HorizontalAlignment="Center"
+                        Background="Green"
+                        Click="Commit"
+                        Content="Go"
+                        FontSize="22"
+                        Style="{StaticResource MaterialDesignFloatingActionSecondaryButton}"
+                        ToolTip="开始导航" />
+                    <Button
+                        MaxWidth="60"
+                        Margin="10"
+                        HorizontalAlignment="Center"
+                        Background="red"
+                        Click="Cancel"
+                        Style="{StaticResource MaterialDesignFloatingActionSecondaryButton}"
+                        ToolTip="取消操作">
+                        <materialDesign:PackIcon Kind="CloseThick" />
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Viewbox>
+</Window>

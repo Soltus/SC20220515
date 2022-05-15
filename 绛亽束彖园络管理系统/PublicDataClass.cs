@@ -68,10 +68,6 @@ namespace 绛亽束彖园络管理系统
             // 再次打开窗口时需要激活
             window.Activate();
         }
-        public static void Close()
-        {
-            window = null;
-        }
 
         static void onClosing(object sender, CancelEventArgs e)
         {

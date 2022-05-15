@@ -120,7 +120,6 @@ namespace 绛亽束彖园络管理系统
                 ShowToast("连接超时,请检查配置");
             }
             root.IsEnabled = true;
-            WindowsManager2<右下角累加通知>.Close();
         }
 
         private void 使用Windows身份验证_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -155,7 +154,6 @@ namespace 绛亽束彖园络管理系统
             }
             else { ShowToast("连接超时,请检查配置"); }
             root.IsEnabled = true;
-            WindowsManager2<右下角累加通知>.Close();
         }
 
 

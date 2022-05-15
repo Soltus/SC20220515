@@ -85,25 +85,25 @@ namespace 绛亽束彖园络管理系统
         {
             if (Account.Text.ToString() == "") { ShowToast("不可为空"); return; }
             if (Password.Password.ToString() == "") { ShowToast("不可为空"); return; }
-            loginBTN.IsEnabled = false;
+            root.IsEnabled = false;
             // Connecting to a named instance of SQL Server with SQL Server Authentication using ServerConnection  
             ServerConnection srvConn = new();
             srvConn.ServerInstance = @".\" + Instance.SelectedItem;   // connects to named instance  
             srvConn.LoginSecure = false;   // set to true for Windows Authentication  
             srvConn.Login = Account.Text.ToString();
             srvConn.Password = Password.Password.ToString();
-
+            dc.Name = $"Try to connect to server {srvConn.ServerInstance}.";
+            WindowsManager2<右下角累加通知>.Show(dc);
             string eee = "";
             Task ppp = Task.Run(() => Tototo(ref srvConn, ref eee));
-
-            bool IsComplate = ppp.Wait(5000);
-            Thread.Sleep(300);
-            if (PublicDataClass.Instance != null && IsComplate)
+            ppp.Wait();
+            if (PublicDataClass.Instance != null)
             {
                 PublicDataClass.Instance.Refresh();
                 PublicDataClass.Instance.Databases.Refresh();
                 this.DialogResult = Convert.ToBoolean(1);
-                Thread.Sleep(3000);
+                dc.Name = $"Successfull connection to server {srvConn.ServerInstance}. for v{PublicDataClass.Instance.Information.Version.Major}";
+                WindowsManager2<右下角累加通知>.Show(dc);
                 if (App.Current.MainWindow == null) App.Current.MainWindow = new MainWindow(false);
                 App.Current.MainWindow.Show();
                 this.Close();
@@ -111,48 +111,53 @@ namespace 绛亽束彖园络管理系统
             }
             else if (eee != "")
             {
-                var drawer = DrawerHost.CloseDrawerCommand;
-                drawer.Execute(null, null);
-                ShowToast(eee);
+                dc.Name = eee;
+                WindowsManager2<右下角累加通知>.Show(dc);
                 eee = "";
             }
             else
             {
-                var drawer = DrawerHost.CloseDrawerCommand;
-                drawer.Execute(null, null);
                 ShowToast("连接超时,请检查配置");
             }
-            loginBTN.IsEnabled = true;
+            root.IsEnabled = true;
+            WindowsManager2<右下角累加通知>.Close();
         }
 
         private void 使用Windows身份验证_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            root.IsEnabled = false;
             // Connecting to a named instance of SQL Server with SQL Server Authentication using ServerConnection  
             ServerConnection srvConn = new();
             srvConn.ServerInstance = @".\" + Instance.SelectedItem;   // connects to named instance  
             srvConn.LoginSecure = true;   // set to true for Windows Authentication
+            dc.Name = $"Try to connect to server {srvConn.ServerInstance}.";
+            WindowsManager2<右下角累加通知>.Show(dc);
             string eee = "";
             Task ppp = Task.Run(() => Tototo(ref srvConn, ref eee));
-            bool IsComplate = ppp.Wait(500);
-            Thread.Sleep(2000);
-            if (PublicDataClass.Instance != null && IsComplate)
+            //bool IsComplate = ppp.Wait(15000);
+            ppp.Wait();
+            if (PublicDataClass.Instance != null)
             {
                 PublicDataClass.Instance.Refresh();
                 PublicDataClass.Instance.Databases.Refresh();
                 this.DialogResult = Convert.ToBoolean(1);
+                dc.Name = $"Successfull connection to server {srvConn.ServerInstance}. for v{PublicDataClass.Instance.Information.Version.Major}";
+                WindowsManager2<右下角累加通知>.Show(dc);
                 if (App.Current.MainWindow == null) App.Current.MainWindow = new MainWindow(false);
                 App.Current.MainWindow.Show();
                 this.Close();
                 ppp.Dispose();
             }
-            else if (eee != "") { ShowToast(eee); eee = ""; }
+            else if (eee != "") { 
+                dc.Name = eee;
+                eee = "";
+                WindowsManager2<右下角累加通知>.Show(dc);
+            }
             else { ShowToast("连接超时,请检查配置"); }
+            root.IsEnabled = true;
+            WindowsManager2<右下角累加通知>.Close();
         }
 
-        async private Task Ttt()
-        {
-            await DialogHost.Show(loading);
-        }
 
         void Tototo(ref ServerConnection srvConn, ref string eee)
         {
@@ -164,12 +169,10 @@ namespace 绛亽束彖园络管理系统
             catch (Exception ex)
             {
                 eee = ex.Message;
-                Console.WriteLine(ex.Message);
                 PublicDataClass.Instance = null;
             }
 
         }
-
 
 
         //“注册账户”TextBlock触发事件
@@ -178,20 +181,21 @@ namespace 绛亽束彖园络管理系统
             //RegisterWindow register1 = new RegisterWindow();  //Login为窗口名，把要跳转的新窗口实例化
             //this.Close();  //关闭当前窗口
             //register1.ShowDialog();   //打开新窗口
-            MessageBox.Show("请在第三方软件使用管理员账号登录 SQL Server 并手动创建账号", "不支持在此注册账号");
+            dc.Name = "不支持在此注册账号\n请在第三方软件使用管理员账号登录 SQL Server 并手动创建账号 ~";
+            WindowsManager2<右下角累加通知>.Show(dc);
         }
 
         private void TextBlock_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
         {
             //右下角累加通知 x = new("注意：SQL Server 安装完成后先重启计算机 ~");x.Show();
             string str = System.Environment.CurrentDirectory;
+            dc.Name = "注意：SQL Server 安装完成后先重启计算机 ~";
+            WindowsManager2<右下角累加通知>.Show(dc);
             try
             {
                 Process.Start($"{str}\\exe\\SQL2019-SSEI-Expr.exe");
 
                 this.WindowState = WindowState.Minimized;
-                dc.Name = "注意：SQL Server 安装完成后先重启计算机 ~";
-                WindowsManager2<右下角累加通知>.Show(dc);
             }
             catch
             {
@@ -205,14 +209,16 @@ namespace 绛亽束彖园络管理系统
                     pr.Start();
 
                     this.WindowState = WindowState.Minimized;
-                    dc.Name = "注意：SQL Server 安装完成后先重启计算机 ~";
-                    WindowsManager2<右下角累加通知>.Show(dc);
                 }
                 catch (Exception ex)
                 {
                     Clipboard.SetDataObject($"{str}\\exe\\");
-                    MessageBox.Show($"无法启动   {str}\\exe\\SQL2019-SSEI-Expr.exe \n请尝试手动运行（路径已复制到剪切板）"); 
-                    ShowToast(ex.Message); }
+
+                    dc.Name = $"{ex.Message}";
+                    WindowsManager2<右下角累加通知>.Show(dc);
+                    dc.Name = $"无法启动   {str}\\exe\\SQL2019-SSEI-Expr.exe \n请尝试手动运行（路径已复制到剪切板）";
+                    WindowsManager2<右下角累加通知>.Show(dc);
+                }
             }
         }
     }

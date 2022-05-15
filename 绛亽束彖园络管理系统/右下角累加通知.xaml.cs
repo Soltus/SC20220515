@@ -21,7 +21,6 @@ namespace 绛亽束彖园络管理系统
         public 右下角累加通知()
         {
             InitializeComponent();
-            this.Loaded += StartCloseTimer; // 定时关闭
             note.MouseLeftButtonDown += (s, e) => { this.Close(); };
             // 右下角显示
             var r = SystemParameters.WorkArea;
@@ -33,27 +32,6 @@ namespace 绛亽束彖园络管理系统
                 this.Left = r.Right - ActualWidth;
                 this.Top = r.Bottom - ActualHeight;
             };
-        }
-
-        public 右下角累加通知(object n) : this()
-        {
-            this.DataContext = n;
-            //note.Text = $"{note.Text}\n\n{n}";
-        }
-
-        private void StartCloseTimer(object sender, RoutedEventArgs e)
-        {
-            DispatcherTimer timer = new();
-            timer.Interval = TimeSpan.FromSeconds(60);
-            timer.Tick += TimerTick; // 注册计时器到点后触发的回调
-            timer.Start();
-        }
-        private void TimerTick(object sender, EventArgs e)
-        {
-            DispatcherTimer timer = (DispatcherTimer)sender;
-            timer.Stop();
-            timer.Tick -= TimerTick; // 取消注册
-            this.Hide();
         }
 
     }

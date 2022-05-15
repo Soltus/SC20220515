@@ -9,6 +9,7 @@
     Title="登录"
     Width="350"
     Height="600"
+    d:DataContext="{d:DesignInstance Type=local:WindowsManager2_SingleStringArgsDC}"
     AllowsTransparency="True"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="{StaticResource uiSC}"
@@ -77,190 +78,164 @@
             </EventTrigger.Actions>
         </EventTrigger>
     </Window.Triggers>
-    <materialDesign:DialogHost>
 
-        <materialDesign:DialogHost.DialogContent>
-            <!--  这里放遮罩层的内容，比如我的是一个加载动画和一个登录中的文字  -->
-            <!--  不在这里定义内容也可以，可以在触发的控件的CommandParameter里面写  -->
-            <!--  也可以是在cs代码里面传DialogHost.Show(viewOrModel);  -->
-            <!--
-                也可以个给遮罩层起个Name，然后cs代码里面读取想加载的内容DataTemplate
-                然后把页面内容赋值给遮罩层，DialogName.DialogConten=页面内容;
-                然后在CS里面用DialogName.IsOpen=true;即可打开遮罩层了
-                这个方式可以封装成对应的方法，达到一个遮罩层重复利用不同场景
-            -->
-            <StackPanel
-                x:Name="loading"
-                Width="50"
-                Height="50"
-                Margin="16">
-                <Viewbox>
-                    <ProgressBar
-                        HorizontalAlignment="Center"
-                        IsIndeterminate="True"
-                        Style="{DynamicResource MaterialDesignCircularProgressBar}"
-                        Value="0" />
-                </Viewbox>
+    <Grid x:Name="root">
+        <Rectangle Height="330" VerticalAlignment="Top">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                    <GradientStop Color="#1243" />
+                    <GradientStop Offset="1" Color="#1122" />
+                    <GradientStop Offset="0.546" Color="#346" />
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle Height="270" VerticalAlignment="Bottom">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="#1122" />
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Rectangle
+            Width="280"
+            Height="300"
+            Margin="0,120"
+            VerticalAlignment="Bottom"
+            Fill="White"
+            RadiusX="10"
+            RadiusY="10">
+            <Rectangle.Effect>
+                <DropShadowEffect
+                    BlurRadius="15"
+                    Direction="0"
+                    RenderingBias="Quality"
+                    ShadowDepth="1"
+                    Color="#FFBBBBBB" />
+            </Rectangle.Effect>
+        </Rectangle>
+
+        <Grid
+            Height="260"
+            Margin="35,120"
+            VerticalAlignment="Bottom">
+            <Label
+                Margin="0,-22"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Content="登录"
+                FontSize="18"
+                Foreground="Gray" />
+            <StackPanel Margin="15" VerticalAlignment="Center">
+                <ComboBox
+                    x:Name="Instance"
+                    Margin="0,15"
+                    materialDesign:HintAssist.Hint="实例"
+                    materialDesign:TextFieldAssist.HasClearButton="True"
+                    FontFamily="{StaticResource uiSC}"
+                    FontSize="12"
+                    Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+                <TextBox
+                    x:Name="Account"
+                    Margin="0,15"
+                    materialDesign:HintAssist.Hint="账号"
+                    FontFamily="{StaticResource monoSC}"
+                    FontSize="16"
+                    MaxLength="20"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+                <PasswordBox
+                    x:Name="Password"
+                    Margin="0,15"
+                    materialDesign:HintAssist.Hint="密码"
+                    FontFamily="Champagne &amp; Limousines"
+                    FontSize="16"
+                    MaxLength="20"
+                    Style="{StaticResource MaterialDesignOutlinedPasswordBox}" />
             </StackPanel>
-        </materialDesign:DialogHost.DialogContent>
-        <Grid>
-            <Rectangle Height="330" VerticalAlignment="Top">
-                <Rectangle.Fill>
-                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                        <GradientStop Color="#1243" />
-                        <GradientStop Offset="1" Color="#1122" />
-                        <GradientStop Offset="0.546" Color="#346" />
-                    </LinearGradientBrush>
-                </Rectangle.Fill>
-            </Rectangle>
-            <Rectangle Height="270" VerticalAlignment="Bottom">
-                <Rectangle.Fill>
-                    <SolidColorBrush Color="#1122" />
-                </Rectangle.Fill>
-            </Rectangle>
-
-            <Rectangle
-                Width="280"
-                Height="300"
-                Margin="0,120"
-                VerticalAlignment="Bottom"
-                Fill="White"
-                RadiusX="10"
-                RadiusY="10">
-                <Rectangle.Effect>
-                    <DropShadowEffect
-                        BlurRadius="15"
-                        Direction="0"
-                        RenderingBias="Quality"
-                        ShadowDepth="1"
-                        Color="#FFBBBBBB" />
-                </Rectangle.Effect>
-            </Rectangle>
-
-            <Grid
-                Height="260"
-                Margin="35,120"
-                VerticalAlignment="Bottom">
-                <Label
-                    Margin="0,-22"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Top"
-                    Content="登录"
-                    FontSize="18"
-                    Foreground="Gray" />
-                <StackPanel Margin="15" VerticalAlignment="Center">
-                    <ComboBox
-                        x:Name="Instance"
-                        Margin="0,15"
-                        materialDesign:HintAssist.Hint="实例"
-                        materialDesign:TextFieldAssist.HasClearButton="True"
-                        FontFamily="{StaticResource uiSC}"
-                        FontSize="12"
-                        Style="{StaticResource MaterialDesignOutlinedComboBox}" />
-                    <TextBox
-                        x:Name="Account"
-                        Margin="0,15"
-                        materialDesign:HintAssist.Hint="账号"
-                        FontFamily="{StaticResource monoSC}"
-                        FontSize="16"
-                        MaxLength="20"
-                        Style="{StaticResource MaterialDesignOutlinedTextBox}" />
-                    <PasswordBox
-                        x:Name="Password"
-                        Margin="0,15"
-                        materialDesign:HintAssist.Hint="密码"
-                        FontFamily="Champagne &amp; Limousines"
-                        FontSize="16"
-                        MaxLength="20"
-                        Style="{StaticResource MaterialDesignOutlinedPasswordBox}" />
-                </StackPanel>
-            </Grid>
-
-
-            <Button
-                Name="loginBTN"
-                Width="150"
-                Margin="0,75"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Bottom"
-                Click="Login_Button"
-                Content="SQL Server 身份验证"
-                FontFamily="{StaticResource uiSC}"
-                FontSize="14" />
-
-            <TextBlock
-                Margin="60,40,10,10"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"
-                Cursor="Hand"
-                FontFamily="{StaticResource uiSC}"
-                FontSize="13"
-                Foreground="Gray"
-                MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"
-                Text="注册账户" />
-            <TextBlock
-                Margin="10,40,10,10"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Bottom"
-                Cursor="Hand"
-                FontFamily="{StaticResource uiSC}"
-                FontSize="13"
-                Foreground="DarkBlue"
-                MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_1"
-                Text="安装 SQL Server" />
-
-            <TextBlock
-                Name="winlogin"
-                Margin="0,45"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Bottom"
-                Cursor="Hand"
-                FontFamily="{StaticResource uiSC}"
-                FontSize="15"
-                Foreground="BlueViolet"
-                MouseLeftButtonDown="使用Windows身份验证_MouseLeftButtonDown"
-                Text="Windows 身份验证" />
-
-
-            <Button
-                Margin="0,8,8,0"
-                Padding="2"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Background="{x:Null}"
-                BorderBrush="{x:Null}"
-                Click="Close_Click"
-                Cursor="Hand"
-                Style="{x:Null}">
-                <materialDesign:PackIcon Kind="Close">
-                    <materialDesign:PackIcon.RenderTransform>
-                        <ScaleTransform CenterX="10" CenterY="0" ScaleX="1.5" ScaleY="1.5" />
-                    </materialDesign:PackIcon.RenderTransform>
-                </materialDesign:PackIcon>
-            </Button>
-
-            <Border
-                Name="waitingA"
-                Width="100"
-                Height="100"
-                Margin="30"
-                VerticalAlignment="Top"
-                BorderBrush="#EEE"
-                BorderThickness="2"
-                CornerRadius="30">
-                <Border.Background>
-                    <ImageBrush ImageSource="./images/image.jpg" />
-                </Border.Background>
-            </Border>
-
-            <StackPanel
-                Name="ToastPanel"
-                Height="300"
-                Margin="55"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Orientation="Vertical" />
         </Grid>
 
-    </materialDesign:DialogHost>
+
+        <Button
+            Name="loginBTN"
+            Width="150"
+            Margin="0,75"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            Click="Login_Button"
+            Content="SQL Server 身份验证"
+            FontFamily="{StaticResource uiSC}"
+            FontSize="14" />
+
+        <TextBlock
+            Margin="60,40,10,10"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Cursor="Hand"
+            FontFamily="{StaticResource uiSC}"
+            FontSize="13"
+            Foreground="Gray"
+            MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"
+            Text="注册账户" />
+        <TextBlock
+            Margin="10,40,10,10"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            Cursor="Hand"
+            FontFamily="{StaticResource uiSC}"
+            FontSize="13"
+            Foreground="DarkBlue"
+            MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_1"
+            Text="安装 SQL Server" />
+
+        <TextBlock
+            Name="winlogin"
+            Margin="0,45"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            Cursor="Hand"
+            FontFamily="{StaticResource uiSC}"
+            FontSize="15"
+            Foreground="BlueViolet"
+            MouseLeftButtonDown="使用Windows身份验证_MouseLeftButtonDown"
+            Text="Windows 身份验证" />
+
+
+        <Button
+            Margin="0,8,8,0"
+            Padding="2"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Background="{x:Null}"
+            BorderBrush="{x:Null}"
+            Click="Close_Click"
+            Cursor="Hand"
+            Style="{x:Null}">
+            <materialDesign:PackIcon Kind="Close">
+                <materialDesign:PackIcon.RenderTransform>
+                    <ScaleTransform CenterX="10" CenterY="0" ScaleX="1.5" ScaleY="1.5" />
+                </materialDesign:PackIcon.RenderTransform>
+            </materialDesign:PackIcon>
+        </Button>
+
+        <Border
+            Name="waitingA"
+            Width="100"
+            Height="100"
+            Margin="30"
+            VerticalAlignment="Top"
+            BorderBrush="#EEE"
+            BorderThickness="2"
+            CornerRadius="30">
+            <Border.Background>
+                <ImageBrush ImageSource="./images/image.jpg" />
+            </Border.Background>
+        </Border>
+
+        <StackPanel
+            Name="ToastPanel"
+            Height="300"
+            Margin="55"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Orientation="Vertical" />
+    </Grid>
+
 </Window>

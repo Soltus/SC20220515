@@ -5,6 +5,7 @@ using Microsoft.SqlServer.Management.Smo.Wmi;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -185,10 +186,12 @@ namespace 绛亽束彖园络管理系统
             WindowsManager2<右下角累加通知>.Show(dc);
         }
 
-        private void TextBlock_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
+        async private void TextBlock_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
         {
             //右下角累加通知 x = new("注意：SQL Server 安装完成后先重启计算机 ~");x.Show();
             string str = System.Environment.CurrentDirectory;
+            FileInfo fi = new FileInfo($"{str}\\exe\\SQL2019-SSEI-Expr.exe");    
+            if (!File.Exists($"{str}\\exe\\SQL2019-SSEI-Expr.exe")){ await HttpClientHelper.DownloadFile("https://go.microsoft.com/fwlink/?linkid=866658",fi); }
             dc.Name = "注意：SQL Server 安装完成后先重启计算机 ~";
             WindowsManager2<右下角累加通知>.Show(dc);
             try

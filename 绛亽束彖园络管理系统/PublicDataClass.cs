@@ -8,11 +8,14 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -494,5 +497,125 @@ namespace 绛亽束彖园络管理系统
 
     }
     #endregion
+
+    public class HttpClientHelper
+    {
+        private static readonly object LockObj = new object();
+        private static HttpClient client = null;
+        public HttpClientHelper()
+        {
+            GetInstance();
+        }
+        public static HttpClient GetInstance()
+        {
+
+            if (client == null)
+            {
+                lock (LockObj)
+                {
+                    if (client == null)
+                    {
+                        client = new HttpClient();
+                    }
+                }
+            }
+            return client;
+        }
+        public async Task<string> PostAsync(string url, string strJson)//post异步请求方法
+        {
+            try
+            {
+                HttpContent content = new StringContent(strJson);
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                //由HttpClient发出异步Post请求
+                HttpResponseMessage res = await client.PostAsync(url, content);
+                if (res.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string str = res.Content.ReadAsStringAsync().Result;
+                    return str;
+                }
+                else
+                    return null;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public string Post(string url, string strJson)//post同步请求方法
+        {
+            try
+            {
+                HttpContent content = new StringContent(strJson);
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                //client.DefaultRequestHeaders.Connection.Add("keep-alive");
+                //由HttpClient发出Post请求
+                Task<HttpResponseMessage> res = client.PostAsync(url, content);
+                if (res.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string str = res.Result.Content.ReadAsStringAsync().Result;
+                    return str;
+                }
+                else
+                    return null;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public string Get(string url)
+        {
+            try
+            {
+                var responseString = client.GetStringAsync(url);
+                return responseString.Result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public static async Task DownloadFile(string url, FileInfo file)
+        {
+            var httpClient = new HttpClient();
+            var response = await httpClient.GetAsync(url);
+            WindowsManager2_SingleStringArgsDC dc = new();
+
+            try
+            {
+                var n = response.Content.Headers.ContentLength;
+                var stream = await response.Content.ReadAsStreamAsync();
+                using (var fileStream = file.Create())
+                using (stream)
+                {
+                    byte[] buffer = new byte[1024];
+                    var readLength = 0;
+                    int length;
+                    while ((length = await stream.ReadAsync(buffer, 0, buffer.Length)) != 0)
+                    {
+                        readLength += length;
+
+                        //Console.WriteLine("下载进度" + ((double)readLength) / n * 100);
+
+                        // 写入到文件
+                        fileStream.Write(buffer, 0, length);
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                dc.Name = e.Message;
+                WindowsManager2<右下角累加通知>.Show(dc);
+            }
+        }
+
+
+    }
+
 
 }

@@ -97,9 +97,9 @@ namespace 绛亽束彖园络管理系统
                 if (tb1.Text == "") { throw new Exception("未指定数据库"); }
                 if (tb2.Text == "") { throw new Exception("未指定数据表"); }
                 Database db1 = PublicDataClass.Instance.Databases[$"{tb1.Text}"];
-                DataSet ds = db1.ExecuteWithResults($"select COUNT(*) as 卩 from {tb2.Text} where 格叚 = 0;");
+                DataSet ds = db1.ExecuteWithResults($"select COUNT(*) as 卩 from [{tb2.Text}] where 格叚 = 0;");
                 string 卩 = ds.Tables[0].Rows[0][0].ToString();
-                ds = db1.ExecuteWithResults($"select COUNT(*) as 卪 from {tb2.Text} where 格叚 = 1;");
+                ds = db1.ExecuteWithResults($"select COUNT(*) as 卪 from [{tb2.Text}] where 格叚 = 1;");
                 string 卪 = ds.Tables[0].Rows[0][0].ToString();
                 MessageBox.Show($"卩:{卩}  卪:{卪}");
             }
@@ -118,7 +118,7 @@ namespace 绛亽束彖园络管理系统
                 string results = "";
                 foreach (string i in PublicDataClass.元氏表)
                 {
-                    DataSet ds = db1.ExecuteWithResults($"select COUNT(*) as 卩 from {tb2.Text} where 元氏 = '{i}';");
+                    DataSet ds = db1.ExecuteWithResults($"select COUNT(*) as 卩 from [{tb2.Text}] where 元氏 = '{i}';");
                     results = results + $"{i}: " + ds.Tables[0].Rows[0][0].ToString() + "\n";
                 }
                 MessageBox.Show(results);
@@ -140,7 +140,7 @@ namespace 绛亽束彖园络管理系统
                 List<元氏计数> list = new List<元氏计数>();
                 foreach (string i in PublicDataClass.元氏表)
                 {
-                    DataSet ds = db1.ExecuteWithResults($"select COUNT(*) from {tb2.Text} where 元氏 = '{i}';");
+                    DataSet ds = db1.ExecuteWithResults($"select COUNT(*) from [{tb2.Text}] where 元氏 = '{i}';");
                     list.Add(new 元氏计数(int.Parse(ds.Tables[0].Rows[0][0].ToString()), i));
                 }
                 list = list.OrderByDescending(o => o.数量).ToList();//降序

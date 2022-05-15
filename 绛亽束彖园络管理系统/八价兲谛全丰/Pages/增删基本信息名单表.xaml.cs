@@ -114,10 +114,19 @@ namespace 绛亽束彖园络管理系统
                 List<string> 已有表 = PublicFunctions.GetCustomTableNameList(ref db1);
                 if (已有表.Contains(tb2.Text)) { throw new Exception("不能添加已存在的表"); }
                 Submit_添加(tb2.Text.Trim());
-                change_tb3(tb2.Text, " 已添加", ref db1);
             }
             catch (Exception ex)
             { WebView2Controlers.logger.Error(ex.Message); MessageBox.Show(ex.Message); }
+            finally
+            {
+                PublicDataClass.Instance.Databases.Refresh();
+                Database db1 = PublicDataClass.Instance.Databases[$"{tb1.Text}"];
+                List<string> 已有表 = PublicFunctions.GetCustomTableNameList(ref db1);
+                if (已有表.Contains(tb2.Text))
+                {
+                    change_tb3(tb2.Text, " 已添加", ref db1);
+                }
+            }
 
         }
 

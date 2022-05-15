@@ -193,22 +193,27 @@ namespace 绛亽束彖园络管理系统
             WindowsManager2<右下角累加通知>.Show(dc);
             try
             {
-                Process.Start($"{str}\\exe\\SQL2019-SSEI-Expr.exe");
-
                 this.WindowState = WindowState.Minimized;
+                Process.Start($"{str}\\exe\\SQL2019-SSEI-Expr.exe").WaitForExit();
+                this.WindowState = WindowState.Normal;
+                this.Activate();
             }
             catch
             {
                 try
-                { // 没有效果
+                {  // 以管理员身份运行
+                    this.WindowState = WindowState.Minimized;
                     Process pr = new Process();
-                    pr.StartInfo.WorkingDirectory = $"{str}\\exe\\";
                     pr.StartInfo.FileName = $"{str}\\exe\\SQL2019-SSEI-Expr.exe";
                     pr.StartInfo.UseShellExecute = false;
+                    pr.StartInfo.UseShellExecute = true;
+                    pr.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
+                    pr.StartInfo.Verb = "RunAs";
                     pr.StartInfo.CreateNoWindow = false;
                     pr.Start();
-
-                    this.WindowState = WindowState.Minimized;
+                    pr.WaitForExit();
+                    this.WindowState = WindowState.Normal;
+                    this.Activate();
                 }
                 catch (Exception ex)
                 {
@@ -216,7 +221,7 @@ namespace 绛亽束彖园络管理系统
 
                     dc.Name = $"{ex.Message}";
                     WindowsManager2<右下角累加通知>.Show(dc);
-                    dc.Name = $"无法启动   {str}\\exe\\SQL2019-SSEI-Expr.exe \n请尝试手动运行（路径已复制到剪切板）";
+                    dc.Name = $"无法启动 {str}\\exe\\SQL2019-SSEI-Expr.exe \n请尝试手动运行（路径已复制到剪切板）";
                     WindowsManager2<右下角累加通知>.Show(dc);
                 }
             }

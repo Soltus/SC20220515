@@ -24,6 +24,8 @@ namespace 绛亽束彖园络管理系统
 
         public static TaskbarIcon Taskbar;
 
+        public static WindowsManager2_SingleStringArgsDC DCbox = new(); // 共享右下角通知
+
 
 
         readonly public static System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.None);

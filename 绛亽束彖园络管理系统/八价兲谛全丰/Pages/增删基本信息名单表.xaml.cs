@@ -114,18 +114,16 @@ namespace 绛亽束彖园络管理系统
                 List<string> 已有表 = PublicFunctions.GetCustomTableNameList(ref db1);
                 if (已有表.Contains(tb2.Text)) { throw new Exception("不能添加已存在的表"); }
                 Submit_添加(tb2.Text.Trim());
-            }
-            catch (Exception ex)
-            { WebView2Controlers.logger.Error(ex.Message); MessageBox.Show(ex.Message); }
-            finally
-            {
-                PublicDataClass.Instance.Databases.Refresh();
-                Database db1 = PublicDataClass.Instance.Databases[$"{tb1.Text}"];
-                List<string> 已有表 = PublicFunctions.GetCustomTableNameList(ref db1);
+                PublicDataClass.Instance.Databases.Refresh();;
                 if (已有表.Contains(tb2.Text))
                 {
                     change_tb3(tb2.Text, " 已添加", ref db1);
                 }
+            }
+            catch (Exception ex)
+            { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox); }
+            finally
+            {
             }
 
         }
@@ -217,7 +215,7 @@ namespace 绛亽束彖园络管理系统
                 change_tb3(tb2.Text, "", ref db1);
             }
             catch (Exception ex)
-            { WebView2Controlers.logger.Error(ex.Message); MessageBox.Show(ex.Message); }
+            { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox);; }
             finally
             {
                 bt1.IsEnabled = true;
@@ -239,7 +237,7 @@ namespace 绛亽束彖园络管理系统
                 获取结果.IsExpanded = true;
             }
             catch (Exception ex)
-            { WebView2Controlers.logger.Error(ex.Message); MessageBox.Show(ex.Message); }
+            { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox);; }
             finally
             {
                 bt1.IsEnabled = true;
@@ -267,7 +265,7 @@ namespace 绛亽束彖园络管理系统
                 change_tb3(name, " 已删除", ref db1);
             }
             catch (Exception ex)
-            { WebView2Controlers.logger.Error(ex.Message); MessageBox.Show(ex.Message); }
+            { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox);; }
             finally
             {
                 bt1.IsEnabled = true;

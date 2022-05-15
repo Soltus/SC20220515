@@ -126,5 +126,10 @@ namespace 绛亽束彖园络管理系统
             this.Activate();
             App.Current.MainWindow = this;
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

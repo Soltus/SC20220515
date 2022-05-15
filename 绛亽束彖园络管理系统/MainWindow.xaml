@@ -70,6 +70,12 @@
                                 Content="杂项"
                                 IsEnabled="False"
                                 Style="{StaticResource MaterialDesignFlatDarkBgButton}" />
+                            <Button
+                                Width="Auto"
+                                Margin="{Binding ElementName=logout, Path=Margin}"
+                                Click="Button_Click_1"
+                                Content="测试项"
+                                Style="{StaticResource MaterialDesignFlatDarkBgButton}" />
                         </UniformGrid>
                     </ScrollViewer.Content>
                 </ScrollViewer>

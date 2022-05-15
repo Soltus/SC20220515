@@ -21,7 +21,6 @@ namespace 绛亽束彖园络管理系统
         public string UserName;
         public string UserPassword;
 
-        WindowsManager2_SingleStringArgsDC dc = new();
 
         // 强依赖
         public void ShowToast(string text, TimeSpan? time = null)
@@ -54,7 +53,7 @@ namespace 绛亽束彖园络管理系统
             }
             catch (Exception ex) 
             { 
-                MessageBox.Show(ex.Message);
+                App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox);;
                 List<string> _x = new();
                 _x.Add("未检测到可用的 SQL Server 实例");
                 Instance.ItemsSource = _x;
@@ -93,8 +92,8 @@ namespace 绛亽束彖园络管理系统
             srvConn.LoginSecure = false;   // set to true for Windows Authentication  
             srvConn.Login = Account.Text.ToString();
             srvConn.Password = Password.Password.ToString();
-            dc.Name = $"Try to connect to server {srvConn.ServerInstance}.";
-            WindowsManager2<右下角累加通知>.Show(dc);
+            App.DCbox.Name = $"Try to connect to server {srvConn.ServerInstance}.";
+            WindowsManager2<右下角累加通知>.Show(App.DCbox);
             string eee = "";
             Task ppp = Task.Run(() => Tototo(ref srvConn, ref eee));
             ppp.Wait();
@@ -103,8 +102,8 @@ namespace 绛亽束彖园络管理系统
                 PublicDataClass.Instance.Refresh();
                 PublicDataClass.Instance.Databases.Refresh();
                 this.DialogResult = Convert.ToBoolean(1);
-                dc.Name = $"Successfull connection to server {srvConn.ServerInstance}. for v{PublicDataClass.Instance.Information.Version.Major}";
-                WindowsManager2<右下角累加通知>.Show(dc);
+                App.DCbox.Name = $"Successfull connection to server {srvConn.ServerInstance}. for v{PublicDataClass.Instance.Information.Version.Major}";
+                WindowsManager2<右下角累加通知>.Show(App.DCbox);
                 if (App.Current.MainWindow == null) App.Current.MainWindow = new MainWindow(false);
                 App.Current.MainWindow.Show();
                 this.Close();
@@ -112,8 +111,8 @@ namespace 绛亽束彖园络管理系统
             }
             else if (eee != "")
             {
-                dc.Name = eee;
-                WindowsManager2<右下角累加通知>.Show(dc);
+                App.DCbox.Name = eee;
+                WindowsManager2<右下角累加通知>.Show(App.DCbox);
                 eee = "";
             }
             else
@@ -131,8 +130,8 @@ namespace 绛亽束彖园络管理系统
             ServerConnection srvConn = new();
             srvConn.ServerInstance = @".\" + Instance.SelectedItem;   // connects to named instance  
             srvConn.LoginSecure = true;   // set to true for Windows Authentication
-            dc.Name = $"Try to connect to server {srvConn.ServerInstance}.";
-            WindowsManager2<右下角累加通知>.Show(dc);
+            App.DCbox.Name = $"Try to connect to server {srvConn.ServerInstance}.";
+            WindowsManager2<右下角累加通知>.Show(App.DCbox);
             string eee = "";
             Task ppp = Task.Run(() => Tototo(ref srvConn, ref eee));
             //bool IsComplate = ppp.Wait(15000);
@@ -142,17 +141,17 @@ namespace 绛亽束彖园络管理系统
                 PublicDataClass.Instance.Refresh();
                 PublicDataClass.Instance.Databases.Refresh();
                 this.DialogResult = Convert.ToBoolean(1);
-                dc.Name = $"Successfull connection to server {srvConn.ServerInstance}. for v{PublicDataClass.Instance.Information.Version.Major}";
-                WindowsManager2<右下角累加通知>.Show(dc);
+                App.DCbox.Name = $"Successfull connection to server {srvConn.ServerInstance}. for v{PublicDataClass.Instance.Information.Version.Major}";
+                WindowsManager2<右下角累加通知>.Show(App.DCbox);
                 if (App.Current.MainWindow == null) App.Current.MainWindow = new MainWindow(false);
                 App.Current.MainWindow.Show();
                 this.Close();
                 ppp.Dispose();
             }
             else if (eee != "") { 
-                dc.Name = eee;
+                App.DCbox.Name = eee;
                 eee = "";
-                WindowsManager2<右下角累加通知>.Show(dc);
+                WindowsManager2<右下角累加通知>.Show(App.DCbox);
             }
             else { ShowToast("连接超时,请检查配置"); }
             root.IsEnabled = true;
@@ -182,8 +181,8 @@ namespace 绛亽束彖园络管理系统
             //RegisterWindow register1 = new RegisterWindow();  //Login为窗口名，把要跳转的新窗口实例化
             //this.Close();  //关闭当前窗口
             //register1.ShowDialog();   //打开新窗口
-            dc.Name = "不支持在此注册账号\n请在第三方软件使用管理员账号登录 SQL Server 并手动创建账号 ~";
-            WindowsManager2<右下角累加通知>.Show(dc);
+            App.DCbox.Name = "不支持在此注册账号\n请在第三方软件使用管理员账号登录 SQL Server 并手动创建账号 ~";
+            WindowsManager2<右下角累加通知>.Show(App.DCbox);
         }
 
         async private void TextBlock_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
@@ -192,8 +191,8 @@ namespace 绛亽束彖园络管理系统
             string str = System.Environment.CurrentDirectory;
             FileInfo fi = new FileInfo($"{str}\\exe\\SQL2019-SSEI-Expr.exe");    
             if (!File.Exists($"{str}\\exe\\SQL2019-SSEI-Expr.exe")){ await HttpClientHelper.DownloadFile("https://go.microsoft.com/fwlink/?linkid=866658",fi); }
-            dc.Name = "注意：SQL Server 安装完成后先重启计算机 ~";
-            WindowsManager2<右下角累加通知>.Show(dc);
+            App.DCbox.Name = "注意：SQL Server 安装完成后先重启计算机 ~";
+            WindowsManager2<右下角累加通知>.Show(App.DCbox);
             try
             {
                 this.WindowState = WindowState.Minimized;
@@ -222,12 +221,13 @@ namespace 绛亽束彖园络管理系统
                 {
                     Clipboard.SetDataObject($"{str}\\exe\\");
 
-                    dc.Name = $"{ex.Message}";
-                    WindowsManager2<右下角累加通知>.Show(dc);
-                    dc.Name = $"无法启动 {str}\\exe\\SQL2019-SSEI-Expr.exe \n请尝试手动运行（路径已复制到剪切板）";
-                    WindowsManager2<右下角累加通知>.Show(dc);
+                    App.DCbox.Name = $"{ex.Message}";
+                    WindowsManager2<右下角累加通知>.Show(App.DCbox);
+                    App.DCbox.Name = $"无法启动 {str}\\exe\\SQL2019-SSEI-Expr.exe \n请尝试手动运行（路径已复制到剪切板）";
+                    WindowsManager2<右下角累加通知>.Show(App.DCbox);
                 }
             }
         }
+
     }
 }

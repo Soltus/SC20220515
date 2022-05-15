@@ -86,7 +86,7 @@ namespace 绛亽束彖园络管理系统
                 dg_set_all();
                 e查询结果.IsExpanded = true;
             }
-            catch (Exception ex) { WebView2Controlers.logger.Error(ex.Message); MessageBox.Show(ex.Message); }
+            catch (Exception ex) { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox);; }
         }
 
         // 格叚比例查询
@@ -103,7 +103,7 @@ namespace 绛亽束彖园络管理系统
                 string 卪 = ds.Tables[0].Rows[0][0].ToString();
                 MessageBox.Show($"卩:{卩}  卪:{卪}");
             }
-            catch (Exception ex) { WebView2Controlers.logger.Error(ex.Message); MessageBox.Show(ex.Message); }
+            catch (Exception ex) { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox);; }
         }
 
         // 元氏比例查询
@@ -123,7 +123,7 @@ namespace 绛亽束彖园络管理系统
                 }
                 MessageBox.Show(results);
             }
-            catch (Exception ex) { WebView2Controlers.logger.Error(ex.Message); MessageBox.Show(ex.Message); }
+            catch (Exception ex) { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox);; }
         }
 
         // 元氏比例查询（排序）
@@ -154,7 +154,7 @@ namespace 绛亽束彖园络管理系统
                 }
                 MessageBox.Show(results.ToString());
             }
-            catch (Exception ex) { WebView2Controlers.logger.Error(ex.Message); MessageBox.Show(ex.Message); }
+            catch (Exception ex) { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox);; }
         }
 
         private void tb2_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -184,7 +184,7 @@ namespace 绛亽束彖园络管理系统
                 dg_set_all();
                 e查询结果.IsExpanded = true;
             }
-            catch (Exception ex) { WebView2Controlers.logger.Error(ex.Message); MessageBox.Show(ex.Message); }
+            catch (Exception ex) { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox);; }
         }
 
         private void e查询结果_Expanded(object sender, RoutedEventArgs e)

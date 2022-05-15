@@ -120,7 +120,7 @@ namespace 绛亽束彖园络管理系统
                 cb1.IsChecked = false;
             }
             catch (Exception ex)
-            { WebView2Controlers.logger.Error(ex.Message); MessageBox.Show(ex.Message); }
+            { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox);; }
         }
 
         private void Button_Click1(object sender, RoutedEventArgs e) // 从剪贴板批量提交
@@ -135,7 +135,7 @@ namespace 绛亽束彖园络管理系统
             catch (ArgumentNullException ex)
             {
                 WebView2Controlers.logger.Error(ex.Message);
-                MessageBox.Show(ex.Message);
+                App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox);;
                 return;
             }
             tb3.Text = "";
@@ -217,7 +217,7 @@ namespace 绛亽束彖园络管理系统
                 PublicFunctions.快速清空表记录(ref t);
             }
             catch (Exception ex)
-            { WebView2Controlers.logger.Error(ex.Message); MessageBox.Show(ex.Message); }
+            { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox);; }
         }
 
         private void cb_db_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

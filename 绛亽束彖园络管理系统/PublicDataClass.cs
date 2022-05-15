@@ -88,7 +88,7 @@ namespace 绛亽束彖园络管理系统
         public string Name
         {
             get { return name; }
-            set { name = $"\n{DateTime.Now}\n{value}\n{name}"; Notify(); }
+            set { name = $"\n[{DateTime.Now}]  {value}\n{name}"; Notify(); }
         }
 
         private void Notify([CallerMemberName] string obj = "")
@@ -419,15 +419,15 @@ namespace 绛亽束彖园络管理系统
 
         public static List<string> GetTableNameList(Database db)
         {
-            db.Tables.Refresh();
+            if (db != null) db.Tables.Refresh();
             List<string> tableList = new();
             foreach (Microsoft.SqlServer.Management.Smo.Table table in db.Tables) tableList.Add(table.Name);
             return tableList;
         }
 
-        public static List<string> GetCustomTableNameList(ref Database db)
+        public static List<string>? GetCustomTableNameList(ref Database db)
         {
-            db.Tables.Refresh();
+            if (db != null) db.Tables.Refresh(); else return null;
             List<string> tableList = new();
             foreach (Microsoft.SqlServer.Management.Smo.Table table in db.Tables)
             {
@@ -610,7 +610,7 @@ namespace 绛亽束彖园络管理系统
             catch (Exception e)
             {
                 dc.Name = e.Message;
-                WindowsManager2<右下角累加通知>.Show(dc);
+                WindowsManager2<右下角累加通知>.Show(App.DCbox);
             }
         }
 

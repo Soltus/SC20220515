@@ -80,7 +80,7 @@ namespace 绛亽束彖园络管理系统
                 tb2.Text = "";
             }
             catch (Exception ex)
-            { WebView2Controlers.logger.Error(ex.Message); MessageBox.Show(ex.Message); }
+            { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox);; }
 
         }
 
@@ -123,7 +123,7 @@ namespace 绛亽束彖园络管理系统
                     tb2.Text = "";
                 }
                 catch (Exception ex)
-                { WebView2Controlers.logger.Error(ex.Message); MessageBox.Show(ex.Message); }
+                { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox);; }
 
             }
             MessageBox.Show($"完成！移除{j}条记录。");
@@ -138,7 +138,7 @@ namespace 绛亽束彖园络管理系统
                 PublicFunctions.快速清空表记录(ref t);
             }
             catch (Exception ex)
-            { WebView2Controlers.logger.Error(ex.Message); MessageBox.Show(ex.Message); }
+            { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox);; }
         }
 
         private void tb1_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -12,6 +12,7 @@ namespace 绛亽束彖园络管理系统
     /// 
     public partial class MainWindow : Window
     {
+        WindowsManager2_SingleStringArgsDC dc = new();
         public MainWindow(bool newin = true)
         {
             InitializeComponent();
@@ -99,6 +100,8 @@ namespace 绛亽束彖园络管理系统
             if (result is bool boolResult && boolResult)
             {
                 _AllowClose = true;
+                右下角通知 x = new("别忘了在系统托盘召唤我~");
+                x.Show();
                 Close();
             }
         }

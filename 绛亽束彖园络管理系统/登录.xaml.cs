@@ -176,25 +176,44 @@ namespace 绛亽束彖园络管理系统
         //“注册账户”TextBlock触发事件
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //RegisterWindow register1 = new RegisterWindow();  //Login为窗口名，把要跳转的新窗口实例化
-            //this.Close();  //关闭当前窗口
-            //register1.ShowDialog();   //打开新窗口
             App.DCbox.Name = "不支持在此注册账号\n请在第三方软件使用管理员账号登录 SQL Server 并手动创建账号 ~";
             WindowsManager2<右下角累加通知>.Show(App.DCbox);
         }
 
+        // 安装SQL Server
         async private void TextBlock_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
         {
-            //右下角累加通知 x = new("注意：SQL Server 安装完成后先重启计算机 ~");x.Show();
+            install.IsEnabled = false;
             string str = System.Environment.CurrentDirectory;
             FileInfo fi = new FileInfo($"{str}\\exe\\SQL2019-SSEI-Expr.exe");    
-            if (!File.Exists($"{str}\\exe\\SQL2019-SSEI-Expr.exe")){ await HttpClientHelper.DownloadFile("https://go.microsoft.com/fwlink/?linkid=866658",fi); }
+            if (!File.Exists($"{str}\\exe\\SQL2019-SSEI-Expr.exe"))
+            {
+                try
+                {
+                    App.DCbox.Name = "无法找到安装包，尝试从网络下载...";
+                    WindowsManager2<右下角累加通知>.Show(App.DCbox);
+                    bool yes = HttpClientHelper.IsAvailableNetworkActive();
+                    if (!yes)
+                    {
+                        App.DCbox.Name = "无法访问，请检查网络连接";
+                        WindowsManager2<右下角累加通知>.Show(App.DCbox); install.IsEnabled = true; return;
+                    }
+                    await HttpClientHelper.DownloadFile("https://go.microsoft.com/fwlink/?linkid=866658", fi);
+                }
+                catch (Exception ex)
+                {
+                    install.IsEnabled = false;
+                    App.DCbox.Name = $"{ex.Message}";
+                    WindowsManager2<右下角累加通知>.Show(App.DCbox); install.IsEnabled = true; return;
+                }
+            }
             App.DCbox.Name = "注意：SQL Server 安装完成后先重启计算机 ~";
             WindowsManager2<右下角累加通知>.Show(App.DCbox);
             try
             {
                 this.WindowState = WindowState.Minimized;
                 Process.Start($"{str}\\exe\\SQL2019-SSEI-Expr.exe").WaitForExit();
+                install.IsEnabled = true;
                 this.WindowState = WindowState.Normal;
                 this.Activate();
             }
@@ -212,17 +231,18 @@ namespace 绛亽束彖园络管理系统
                     pr.StartInfo.CreateNoWindow = false;
                     pr.Start();
                     pr.WaitForExit();
+                    install.IsEnabled = true;
                     this.WindowState = WindowState.Normal;
                     this.Activate();
                 }
                 catch (Exception ex)
                 {
                     Clipboard.SetDataObject($"{str}\\exe\\");
-
                     App.DCbox.Name = $"{ex.Message}";
                     WindowsManager2<右下角累加通知>.Show(App.DCbox);
                     App.DCbox.Name = $"无法启动 {str}\\exe\\SQL2019-SSEI-Expr.exe \n请尝试手动运行（路径已复制到剪切板）";
                     WindowsManager2<右下角累加通知>.Show(App.DCbox);
+                    install.IsEnabled = true; return;
                 }
             }
         }

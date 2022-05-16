@@ -175,6 +175,7 @@
             MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"
             Text="注册账户" />
         <TextBlock
+            x:Name="install"
             Margin="10,40,10,10"
             HorizontalAlignment="Left"
             VerticalAlignment="Bottom"

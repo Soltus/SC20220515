@@ -12,7 +12,9 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -502,6 +504,8 @@ namespace 绛亽束彖园络管理系统
     {
         private static readonly object LockObj = new object();
         private static HttpClient client = null;
+        public static bool IsAvailableNetworkActive() { try { Ping myPing = new(); string host = "cn.bing.com"; byte[] buffer = new byte[32]; int timeout = 1000; PingOptions pingOptions = new(); PingReply reply = myPing.Send(host, timeout, buffer, pingOptions); return (reply.Status == IPStatus.Success); } catch (Exception) { return false; } }
+
         public HttpClientHelper()
         {
             GetInstance();
@@ -583,7 +587,6 @@ namespace 绛亽束彖园络管理系统
         {
             var httpClient = new HttpClient();
             var response = await httpClient.GetAsync(url);
-            WindowsManager2_SingleStringArgsDC dc = new();
 
             try
             {
@@ -609,7 +612,7 @@ namespace 绛亽束彖园络管理系统
             }
             catch (Exception e)
             {
-                dc.Name = e.Message;
+                App.DCbox.Name = e.Message;
                 WindowsManager2<右下角累加通知>.Show(App.DCbox);
             }
         }

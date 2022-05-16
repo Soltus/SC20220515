@@ -68,6 +68,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Update="Data\Serial_PublicDataClass.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Serial_PublicDataClass.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="exe\SQL2019-SSEI-Expr.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

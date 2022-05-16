@@ -16,12 +16,15 @@ using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
+using System.Xml.Serialization;
 
 namespace 绛亽束彖园络管理系统
 {
@@ -241,16 +244,75 @@ namespace 绛亽束彖园络管理系统
         }
     }
 
+    public class XML_Serializer
+    {
+        /// <summary>
+        /// serialize object to xml file.
+        /// </summary>
+        /// <param name="path">the path to save the xml file</param>
+        /// <param name="obj">the object you want to serialize</param>
+        public void serialize_to_xml(string path, object obj)
+        {
+            XmlSerializer serializer = new XmlSerializer(obj.GetType());
+            string content = string.Empty;
+            //serialize
+            using (StringWriter writer = new StringWriter())
+            {
+                serializer.Serialize(writer, obj);
+                content = writer.ToString();
+            }
+            //save to file
+            using (StreamWriter stream_writer = new StreamWriter(path))
+            {
+                stream_writer.Write(content);
+            }
+        }
+
+        /// <summary>
+        /// deserialize xml file to object
+        /// </summary>
+        /// <param name="path">the path of the xml file</param>
+        /// <param name="object_type">the object type you want to deserialize</param>
+        public object deserialize_from_xml(string path, Type object_type)
+        {
+            XmlSerializer serializer = new XmlSerializer(object_type);
+            using (StreamReader reader = new StreamReader(path))
+            {
+                return serializer.Deserialize(reader);
+            }
+        }
+    }
+
     internal abstract class PublicDataClass // 抽象类，不支持实例化
     {
-        public static List<string> 元氏表 { get; } = new List<string>
-        { "晗","荷","兰","龙","龙斯泰","萝","罗","尨","萌","司空","斯特","西恩斯","巽","议","Pounter","Sobbe","Solita","Sofier","Sowin","Pisces","Seung","MST",
-            "沐","檾","雪","姬","梵","莫","Alita","唐","林","白","千羽","宁","云","斯洛克","北宫","东锋","南阳","西山","思年","思语","Silottee","Sibady" };
+        public static List<string> 元氏表 { get; set; }
 
         public static Server? Instance { get; set; }
         public static string Connected_Ins { get; set; }
 
 
+    }
+
+    [Serializable]
+    public class Serial_PublicDataClass
+    {
+        private List<string> _元氏表;
+        public List<string> 元氏表
+        {
+            get
+            {
+                return _元氏表;
+            }
+            set
+            {
+                _元氏表 = value;
+            }
+        }
+        /// <summary>
+        /// 储存反序列化时候的溢出数据
+        /// </summary>
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement> ExtensionData { get; set; }
     }
 
 
@@ -301,6 +363,20 @@ namespace 绛亽束彖园络管理系统
     #region 公共函数
     internal class PublicFunctions
     {
+
+        public static object? SerialReader_json(string file)
+        {
+            string jsonString = File.ReadAllText(file);
+            var obj = JsonSerializer.Deserialize<Serial_PublicDataClass>(jsonString, App.jsonSerializerOptions);
+            return obj;
+        }
+        async public static Task SerialWriter_json(string file, object sp)
+        {
+            using FileStream createStream = File.Create(file);
+            await JsonSerializer.SerializeAsync(createStream, sp, App.jsonSerializerOptions);
+            await createStream.DisposeAsync();
+        }
+
         public static bool RemoteFileExists(string fileUrl)
         {
             bool result = false;//下载结果

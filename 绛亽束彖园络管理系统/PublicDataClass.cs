@@ -86,6 +86,10 @@ namespace 绛亽束彖园络管理系统
             get { return name; }
             set { name = $"\n[{DateTime.Now}]  {value}\n{name}"; Notify(); }
         }
+        public void Clear()
+        {
+            name = string.Empty; Notify("Name");
+        }
 
         private void Notify([CallerMemberName] string obj = "")
         {

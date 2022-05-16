@@ -7,7 +7,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="右下角累加通知"
-    Width="400"
+    Width="350"
     Height="700"
     AllowsTransparency="True"
     Background="#00000000"
@@ -18,13 +18,18 @@
     WindowStyle="None"
     mc:Ignorable="d">
     <Grid x:Name="grid1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
         <ScrollViewer
+            Grid.Row="0"
             VerticalAlignment="Bottom"
             HorizontalScrollBarVisibility="Hidden"
             VerticalScrollBarVisibility="Hidden">
             <TextBlock
                 x:Name="note"
-                Width="400"
+                Width="350"
                 Margin="0"
                 Padding="30,18,18,18"
                 VerticalAlignment="Bottom"
@@ -38,5 +43,28 @@
                 TextTrimming="WordEllipsis"
                 TextWrapping="WrapWithOverflow" />
         </ScrollViewer>
+        <DockPanel Grid.Row="1" Background="{Binding ElementName=note, Path=Background, Mode=OneWay}">
+            <StackPanel
+                HorizontalAlignment="Center"
+                DockPanel.Dock="Bottom"
+                Orientation="Horizontal">
+                <Button
+                    VerticalAlignment="Center"
+                    Background="#339944"
+                    Click="Button_Click"
+                    FontFamily="{StaticResource monoSC}"
+                    FontSize="18">
+                    Close
+                </Button>
+                <Button
+                    VerticalAlignment="Center"
+                    Background="#994455"
+                    Click="Button_Click_1"
+                    FontFamily="{StaticResource monoSC}"
+                    FontSize="18">
+                    Clear
+                </Button>
+            </StackPanel>
+        </DockPanel>
     </Grid>
 </Window>

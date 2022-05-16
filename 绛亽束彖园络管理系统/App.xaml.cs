@@ -106,7 +106,8 @@ namespace 绛亽束彖园络管理系统
         /// </summary>
         public ICommand ExitApplicationCommand => new DelegateCommand
         { CommandAction = () => {
-
+            App.Taskbar.Icon = null;
+            App.Taskbar.Dispose();
             if (PublicDataClass.Instance != null)
                 foreach (Microsoft.SqlServer.Management.Smo.Database db in PublicDataClass.Instance.Databases) { PublicDataClass.Instance.KillAllProcesses(db.Name); }
             Application.Current.Shutdown(); Process.GetCurrentProcess().Kill(); 

@@ -21,7 +21,8 @@ namespace 绛亽束彖园络管理系统
         public 右下角累加通知()
         {
             InitializeComponent();
-            note.MouseLeftButtonDown += (s, e) => { this.Close(); };
+            note.MouseEnter += (s, e) => { note.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ff2222bb")); };
+            note.MouseLeave += (s, e) => { note.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#bb2222bb")); };
             // 右下角显示
             var r = SystemParameters.WorkArea;
             this.Left = r.Right - ActualWidth;
@@ -34,5 +35,16 @@ namespace 绛亽束彖园络管理系统
             };
         }
 
+        // 收起
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        // 清空
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            App.DCbox.Clear();
+        }
     }
 }

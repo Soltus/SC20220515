@@ -115,7 +115,7 @@ namespace 绛亽束彖园络管理系统
                 if (已有表.Contains(tb2.Text)) { throw new Exception("不能添加已存在的表"); }
                 Submit_添加(tb2.Text.Trim());
                 PublicDataClass.Instance.Databases.Refresh();;
-                if (已有表.Contains(tb2.Text))
+                if (!已有表.Contains(tb2.Text))
                 {
                     change_tb3(tb2.Text, " 已添加", ref db1);
                 }

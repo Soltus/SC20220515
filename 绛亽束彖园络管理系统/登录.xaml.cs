@@ -42,6 +42,11 @@ namespace 绛亽束彖园络管理系统
         public 登录()
         {
             InitializeComponent();
+            Initial();
+        }
+
+        private void Initial()
+        {
             try
             {
                 ManagedComputer mc = new();
@@ -51,9 +56,9 @@ namespace 绛亽束彖园络管理系统
                 foreach (ServerInstance si in mc.ServerInstances) list.Add(si.Name);
                 Instance.ItemsSource = list;
             }
-            catch (Exception ex) 
-            { 
-                App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox);;
+            catch (Exception ex)
+            {
+                App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox); ;
                 List<string> _x = new();
                 _x.Add("未检测到可用的 SQL Server 实例");
                 Instance.ItemsSource = _x;
@@ -244,6 +249,10 @@ namespace 绛亽束彖园络管理系统
                     WindowsManager2<右下角累加通知>.Show(App.DCbox);
                     install.IsEnabled = true; return;
                 }
+            }
+            finally
+            {
+                Initial();
             }
         }
 

@@ -240,7 +240,7 @@ namespace 绛亽束彖园络管理系统
                     Clipboard.SetDataObject($"{str}\\exe\\");
                     App.DCbox.Name = $"{ex.Message}";
                     WindowsManager2<右下角累加通知>.Show(App.DCbox);
-                    App.DCbox.Name = $"无法启动 {str}\\exe\\SQL2019-SSEI-Expr.exe \n请尝试手动运行（路径已复制到剪切板）";
+                    App.DCbox.Name = $"无法启动 {str}\\exe\\SQL2019-SSEI-Expr.exe \n请尝试手动运行（路径已复制到剪贴板）";
                     WindowsManager2<右下角累加通知>.Show(App.DCbox);
                     install.IsEnabled = true; return;
                 }

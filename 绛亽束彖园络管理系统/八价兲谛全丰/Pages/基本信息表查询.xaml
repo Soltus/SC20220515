@@ -89,8 +89,9 @@
                                     x:Name="bt1"
                                     Width="240"
                                     Click="Button_Click_3">
-                                    获取指定表全部记录
+                                    获取全部记录
                                 </Button>
+                                <Button Width="{Binding ElementName=bt1, Path=Width}" Click="Button_Click_1">全部记录（到剪贴板）</Button>
                                 <Button Width="{Binding ElementName=bt1, Path=Width}" Click="Button_Click_4">格叚比例查询</Button>
                                 <Button Width="{Binding ElementName=bt1, Path=Width}" Click="Button_Click_5">元氏比例查询</Button>
                                 <Button Width="{Binding ElementName=bt1, Path=Width}" Click="Button_Click_6">元氏比例查询（排序）</Button>
@@ -106,7 +107,7 @@
                                 AcceptsReturn="True"
                                 FontFamily="{StaticResource monoSC}"
                                 FontSize="14"
-                                MaxLength="1000"
+                                MaxLength="5000"
                                 Style="{StaticResource MaterialDesignOutlinedTextBox}" />
                             <Button Click="Button_Click">执行</Button>
                         </StackPanel>

@@ -22,9 +22,16 @@ namespace 绛亽束彖园络管理系统
             Taskbar = (TaskbarIcon)FindResource("Taskbar"); // 任务栏托盘
             base.OnStartup(e);
             App.Current.MainWindow = new MainWindow(true);
-
-            Serial_PublicDataClass sp1 = (Serial_PublicDataClass)PublicFunctions.SerialReader_json(App.JsonDataFile_Serial_PublicDataClass);
-            PublicDataClass.元氏表 = sp1.元氏表;
+            try
+            {
+                Serial_PublicDataClass sp1 = (Serial_PublicDataClass)PublicFunctions.SerialReader_json(App.JsonDataFile_Serial_PublicDataClass);
+                PublicDataClass.元氏表 = sp1.元氏表;
+            }
+            catch
+            {
+                App.DCbox.Name = $"{App.JsonDataFile_Serial_PublicDataClass} 反解析失败，元氏表不可用！";
+                WindowsManager2<右下角累加通知>.Show(App.DCbox);
+            }
         }
 
         public static TaskbarIcon Taskbar;
@@ -64,10 +71,7 @@ namespace 绛亽束彖园络管理系统
 
         public static string JsonDataFile_Serial_PublicDataClass = $"{App.DataPath}\\Serial_PublicDataClass.json";
 
-
-
-
-
+        // App.config 文件
         readonly public static System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.None);
 
 

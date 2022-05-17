@@ -206,5 +206,22 @@ namespace 绛亽束彖园络管理系统
         {
             tb2.IsDropDownOpen = true;
         }
+
+        // 获取记录到剪贴板
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (tb1.Text == "") { throw new Exception("未指定数据库"); }
+                if (tb2.Text == "") { throw new Exception("未指定数据表"); }
+                Database db1 = PublicDataClass.Instance.Databases[$"{tb1.Text}"];
+                DataSet ds = db1.ExecuteWithResults($"select * from [{tb2.Text}];");
+                string dataSetContent = ds.元氏DSToString();
+                Clipboard.SetDataObject(dataSetContent);
+                App.DCbox.Name = $"{tb2.Text}全部记录已复制到剪贴板";
+                WindowsManager2<右下角累加通知>.Show(App.DCbox);
+            }
+            catch (Exception ex) { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox); ; }
+        }
     }
 }

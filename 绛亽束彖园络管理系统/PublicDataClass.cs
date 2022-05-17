@@ -364,6 +364,7 @@ namespace 绛亽束彖园络管理系统
     internal class PublicFunctions
     {
 
+
         public static object? SerialReader_json(string file)
         {
             string jsonString = File.ReadAllText(file);
@@ -574,6 +575,38 @@ namespace 绛亽束彖园络管理系统
         }
 
     }
+
+    public static class Extentions
+    {
+        public static string 元氏DSToString(this DataSet ds)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var table in ds.Tables)
+            {
+                DataTable tbl = table as DataTable;
+                //foreach (var column in tbl.Columns)
+                //{
+                //    DataColumn col = column as DataColumn;
+                //    sb.Append(col.ColumnName + " ");
+                //}
+                sb.AppendLine();
+                foreach (var row in tbl.Rows)
+                {
+                    DataRow dr = row as DataRow;
+                    for (int i = 0; i < dr.ItemArray.Count(); i++)
+                    {
+                        sb.Append(dr.ItemArray[i].ToString() + "⁒");
+                    }
+                    sb.AppendLine();
+                }
+                sb.AppendLine();
+            }
+            return sb.ToString().Replace("⁒False⁒", "").Replace("⁒True⁒", "⁜");
+        }
+    }
+
+
     #endregion
 
     public class HttpClientHelper

@@ -91,7 +91,8 @@
                                     Click="Button_Click_3">
                                     获取全部记录
                                 </Button>
-                                <Button Width="{Binding ElementName=bt1, Path=Width}" Click="Button_Click_1">全部记录（到剪贴板）</Button>
+                                <Button Width="{Binding ElementName=bt1, Path=Width}" Click="Button_Click_1">复制到剪贴板</Button>
+                                <Button Width="{Binding ElementName=bt1, Path=Width}" Click="Button_Click_2">复制到剪贴板（排序）</Button>
                                 <Button Width="{Binding ElementName=bt1, Path=Width}" Click="Button_Click_4">格叚比例查询</Button>
                                 <Button Width="{Binding ElementName=bt1, Path=Width}" Click="Button_Click_5">元氏比例查询</Button>
                                 <Button Width="{Binding ElementName=bt1, Path=Width}" Click="Button_Click_6">元氏比例查询（排序）</Button>

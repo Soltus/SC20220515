@@ -356,7 +356,7 @@ namespace 绛亽束彖园络管理系统
         //重写ToString
         public override string ToString()
         {
-            return "元氏: " + _元氏.PadRight(10, ' ') + " \t元数: " + _数量 + "\t\n";
+            return "元氏: " + _元氏 + String.Empty.PadLeft(10 - PublicFunctions.GetSingleLength(_元氏), ' ') + "   元数: " + _数量 + "  \n";
         }
     }
 

@@ -100,6 +100,7 @@ namespace 绛亽束彖园络管理系统
                 if (tb1.Text == "") { throw new Exception("未指定数据库"); }
                 if (tb2.Text == "") { throw new Exception("未指定数据表"); }
                 Database db1 = PublicDataClass.Instance.Databases[$"{tb1.Text}"];
+                if (db1.Tables[tb2.Text].Columns.Contains("元氏") == false) { throw new Exception("该表未包含元氏列"); }
                 DataSet ds = db1.ExecuteWithResults($"select COUNT(*) as 卩 from [{tb2.Text}] where 格叚 = 0;");
                 string 卩 = ds.Tables[0].Rows[0][0].ToString();
                 ds = db1.ExecuteWithResults($"select COUNT(*) as 卪 from [{tb2.Text}] where 格叚 = 1;");
@@ -118,13 +119,14 @@ namespace 绛亽束彖园络管理系统
                 if (tb2.Text == "") { throw new Exception("未指定数据表"); }
                 Database db1 = PublicDataClass.Instance.Databases[$"{tb1.Text}"];
                 if (db1.Tables[tb2.Text].Columns.Contains("元氏") == false) { throw new Exception("该表未包含元氏列"); }
-                string results = "";
-                foreach (string i in PublicDataClass.元氏表)
-                {
-                    DataSet ds = db1.ExecuteWithResults($"select COUNT(*) as 卩 from [{tb2.Text}] where 元氏 = '{i}';");
-                    results = results + $"{i}: " + ds.Tables[0].Rows[0][0].ToString() + "\n";
-                }
-                MessageBox.Show(results);
+                //string results = "";
+                //foreach (string i in PublicDataClass.元氏表)
+                //{
+                //    DataSet ds = db1.ExecuteWithResults($"select COUNT(*) as 卩 from [{tb2.Text}] where 元氏 = '{i}';");
+                //    results = results + $"{i}: " + ds.Tables[0].Rows[0][0].ToString() + "\n";
+                //}
+                DataSet ds = db1.ExecuteWithResults($"select 元氏,COUNT(*) as 元数 from [{tb2.Text}] group by 元氏 order by 元数 desc;");
+                App.DCbox.Name = $"\n{ds.元氏DSToString().Replace("⁒"," ")}"; WindowsManager2<右下角累加通知>.Show(App.DCbox);
             }
             catch (Exception ex) { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox);; }
         }
@@ -138,7 +140,6 @@ namespace 绛亽束彖园络管理系统
                 if (tb2.Text == "") { throw new Exception("未指定数据表"); }
                 Database db1 = PublicDataClass.Instance.Databases[$"{tb1.Text}"];
                 if (db1.Tables[tb2.Text].Columns.Contains("元氏") == false) { throw new Exception("该表未包含元氏列"); }
-                //string results = "";
                 var results = new StringBuilder("");
                 List<元氏计数> list = new List<元氏计数>();
                 foreach (string i in PublicDataClass.元氏表)
@@ -152,12 +153,12 @@ namespace 绛亽束彖园络管理系统
                 {
                     //results += i;
                     j++;
-                    results.Append($"\t{j}\t");
+                    results.Append($" {j.ToString().PadLeft(3)}  ");
                     results.Append(i);
                 }
-                MessageBox.Show(results.ToString());
+                App.DCbox.Name = $"\n{results}"; WindowsManager2<右下角累加通知>.Show(App.DCbox);
             }
-            catch (Exception ex) { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox);; }
+            catch (Exception ex) { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox); }
         }
 
         private void tb2_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -218,7 +219,26 @@ namespace 绛亽束彖园络管理系统
                 if (tb1.Text == "") { throw new Exception("未指定数据库"); }
                 if (tb2.Text == "") { throw new Exception("未指定数据表"); }
                 Database db1 = PublicDataClass.Instance.Databases[$"{tb1.Text}"];
+                if (db1.Tables[tb2.Text].Columns.Contains("元氏") == false) { throw new Exception("该表未包含元氏列"); }
                 DataSet ds = db1.ExecuteWithResults($"select * from [{tb2.Text}];");
+                string dataSetContent = ds.元氏DSToString();
+                Clipboard.SetDataObject(dataSetContent);
+                App.DCbox.Name = $"{tb2.Text}全部记录已复制到剪贴板";
+                WindowsManager2<右下角累加通知>.Show(App.DCbox);
+            }
+            catch (Exception ex) { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox); ; }
+        }
+
+        // 获取记录到剪贴板（排序）
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (tb1.Text == "") { throw new Exception("未指定数据库"); }
+                if (tb2.Text == "") { throw new Exception("未指定数据表"); }
+                Database db1 = PublicDataClass.Instance.Databases[$"{tb1.Text}"];
+                if (db1.Tables[tb2.Text].Columns.Contains("元氏") == false) { throw new Exception("该表未包含元氏列"); }
+                DataSet ds = db1.ExecuteWithResults($"select a.元氏,a.名字,a.格叚 from [{tb2.Text}] as a join (select 元氏,COUNT(*) as 元数 from [{tb2.Text}] group by 元氏) as b on a.元氏=b.元氏 order by b.元数 desc;");
                 string dataSetContent = ds.元氏DSToString();
                 Clipboard.SetDataObject(dataSetContent);
                 App.DCbox.Name = $"{tb2.Text}全部记录已复制到剪贴板";

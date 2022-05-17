@@ -131,7 +131,9 @@
                                         Height="0"
                                         MinWidth="300"
                                         MaxHeight="500"
-                                        Margin="10,10,0,0" />
+                                        Margin="10,10,0,0"
+                                        HeadersVisibility="All"
+                                        VirtualizingPanel.VirtualizationMode="Standard" />
                                     <DataGrid
                                         Name="dg2"
                                         Width="Auto"
@@ -139,7 +141,9 @@
                                         MinWidth="{Binding ElementName=dg1, Path=MinWidth, Mode=TwoWay}"
                                         MaxHeight="{Binding ElementName=dg1, Path=MaxHeight, Mode=TwoWay}"
                                         Margin="10,10,0,0"
-                                        ItemsSource="{Binding ElementName=dg1, Path=ItemsSource, Mode=TwoWay}" />
+                                        HeadersVisibility="All"
+                                        ItemsSource="{Binding ElementName=dg1, Path=ItemsSource, Mode=TwoWay}"
+                                        VirtualizingPanel.VirtualizationMode="Standard" />
                                     <DataGrid
                                         Name="dg3"
                                         Width="Auto"
@@ -147,7 +151,9 @@
                                         MinWidth="{Binding ElementName=dg1, Path=MinWidth, Mode=TwoWay}"
                                         MaxHeight="{Binding ElementName=dg1, Path=MaxHeight, Mode=TwoWay}"
                                         Margin="10,10,0,0"
-                                        ItemsSource="{Binding ElementName=dg1, Path=ItemsSource, Mode=TwoWay}" />
+                                        HeadersVisibility="All"
+                                        ItemsSource="{Binding ElementName=dg1, Path=ItemsSource, Mode=TwoWay}"
+                                        VirtualizingPanel.VirtualizationMode="Standard" />
                                     <DataGrid
                                         Name="dg4"
                                         Width="Auto"
@@ -155,7 +161,9 @@
                                         MinWidth="{Binding ElementName=dg1, Path=MinWidth, Mode=TwoWay}"
                                         MaxHeight="{Binding ElementName=dg1, Path=MaxHeight, Mode=TwoWay}"
                                         Margin="10,10,0,0"
-                                        ItemsSource="{Binding ElementName=dg1, Path=ItemsSource, Mode=TwoWay}" />
+                                        HeadersVisibility="All"
+                                        ItemsSource="{Binding ElementName=dg1, Path=ItemsSource, Mode=TwoWay}"
+                                        VirtualizingPanel.VirtualizationMode="Standard" />
                                 </WrapPanel>
                             </Grid>
                         </Expander>

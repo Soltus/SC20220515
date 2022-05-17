@@ -26,11 +26,14 @@ namespace 绛亽束彖园络管理系统
         {
             InitializeComponent();
             tb1.ItemsSource = PublicFunctions.GetCustomDatabaseNameList(ref Ins);
-            dg1.LoadingRow += new EventHandler<DataGridRowEventArgs>(dg1_LoadingRow);
+            dg1.LoadingRow += new EventHandler<DataGridRowEventArgs>(dg_LoadingRow);
+            dg2.LoadingRow += new EventHandler<DataGridRowEventArgs>(dg_LoadingRow);
+            dg3.LoadingRow += new EventHandler<DataGridRowEventArgs>(dg_LoadingRow);
+            dg4.LoadingRow += new EventHandler<DataGridRowEventArgs>(dg_LoadingRow);
             this.SizeChanged += new System.Windows.SizeChangedEventHandler(基本信息表查询_Resize);
         }
 
-        private void dg1_LoadingRow(object sender, DataGridRowEventArgs e)
+        private void dg_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = e.Row.GetIndex() + 1;
         }

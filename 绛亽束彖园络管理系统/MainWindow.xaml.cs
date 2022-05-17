@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Management.Smo;
+using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,6 +35,16 @@ namespace 绛亽束彖园络管理系统
             #endregion
             this.Activate();
             App.Current.MainWindow = this;
+            int j = 0;
+            for (int i = PublicDataClass.Instance.Databases.Count; i-->0;)
+            {
+                if (!PublicDataClass.Instance.Databases[i].IsSystemObject) j++;
+            }
+            if (j == 0)
+            {
+                App.DCbox.Name = $"当前实例 {PublicDataClass.Instance.Name} 的用户数据库列表为空";
+                WindowsManager2<右下角累加通知>.Show(App.DCbox);
+            }
         }
 
         bool _AllowClose = false;
@@ -127,9 +138,52 @@ namespace 绛亽束彖园络管理系统
             App.Current.MainWindow = this;
         }
 
+        // 创建数据库
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            
+            GetUserInput wd = new();
+            wd.id.Focus();
+            wd.id.SelectAll();
+            wd.ShowDialog();
+            if (wd.DialogResult == true)
+            {
+                try
+                {
+                    Database db;
+                    db = new Database(PublicDataClass.Instance, wd.Url.Trim());
+                    db.Create();
+                    App.DCbox.Name = $"Database {wd.Url.Trim()} has been created";
+                    WindowsManager2<右下角累加通知>.Show(App.DCbox);
+                }
+                catch (Exception ee) {
+                    App.DCbox.Name = ee.Message;
+                    WindowsManager2<右下角累加通知>.Show(App.DCbox);
+                }
+            }
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            GetUserInput wd = new();
+            wd.id.Focus();
+            wd.id.SelectAll();
+            wd.ShowDialog();
+            if (wd.DialogResult == true)
+            {
+                try
+                {
+                    PublicDataClass.Instance.Databases.Refresh();
+                    if (!PublicDataClass.Instance.Databases.Contains(wd.Url.Trim())) throw new Exception($"Database {wd.Url.Trim()} does not exist");
+                    PublicDataClass.Instance.Databases[wd.Url.Trim()].Drop();
+                    App.DCbox.Name = $"Database {wd.Url.Trim()} has been dropped";
+                    WindowsManager2<右下角累加通知>.Show(App.DCbox);
+                }
+                catch (Exception ee)
+                {
+                    App.DCbox.Name = ee.Message;
+                    WindowsManager2<右下角累加通知>.Show(App.DCbox);
+                }
+            }
         }
     }
 }

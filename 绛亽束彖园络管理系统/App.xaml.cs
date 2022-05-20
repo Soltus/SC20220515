@@ -138,20 +138,18 @@ namespace 绛亽束彖园络管理系统
         {
             CommandAction = () =>
             {
-                //Application.Current.MainWindow.Visibility = Visibility.Hidden;
                 App.Current.MainWindow.Hide();
             },
             CanExecuteFunc = () => App.Current.MainWindow != null && App.Current.MainWindow.Visibility == Visibility.Visible
         };
 
         /// <summary>
-        /// 打开消息窗口
+        /// 呼出通知中心
         /// </summary>
         public ICommand ShowAppboxCommand => new DelegateCommand
         {
             CommandAction = () =>
             {
-                //Application.Current.MainWindow.Visibility = Visibility.Hidden;
                 WindowsManager2<右下角累加通知>.Show(App.DCbox);
             },
             CanExecuteFunc = () => App.DCbox.Name != null

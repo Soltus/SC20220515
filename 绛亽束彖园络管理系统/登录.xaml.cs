@@ -190,6 +190,11 @@ namespace 绛亽束彖园络管理系统
         {
             install.IsEnabled = false;
             string str = System.Environment.CurrentDirectory;
+            if (!Directory.Exists($"{str}\\exe"))
+            {
+                //路径不存在创建路径
+                Directory.CreateDirectory($"{str}\\exe");
+            }
             FileInfo fi = new FileInfo($"{str}\\exe\\SQL2019-SSEI-Expr.exe");    
             if (!File.Exists($"{str}\\exe\\SQL2019-SSEI-Expr.exe"))
             {

@@ -328,6 +328,7 @@
                 FontSize="14">
                 <MenuItem Command="{Binding ShowWindowCommand}" Header="显示主窗口" />
                 <MenuItem Command="{Binding HideWindowCommand}" Header="隐藏主窗口" />
+                <MenuItem Command="{Binding ShowAppboxCommand}" Header="呼出通知中心" />
 
                 <MenuItem Height="130" Command="{Binding ShowWXCommand}">
                     <MenuItem.Header>

@@ -580,7 +580,7 @@ namespace 绛亽束彖园络管理系统
     {
         public static string 元氏DSToString(this DataSet ds)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             foreach (var table in ds.Tables)
             {

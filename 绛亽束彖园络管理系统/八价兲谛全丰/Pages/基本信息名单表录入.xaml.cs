@@ -168,17 +168,14 @@ namespace 绛亽束彖园络管理系统
                 Regex rx = new Regex("^[\u4e00-\u9fa5]$");
                 if (rx.IsMatch(ii.Substring(0, 1)))
                 {
-                    if (元氏表.Contains(left) == false) { throw new Exception($"不允许的元氏: {left}"); }
+                    if (元氏表.Contains(left) == false) { App.DCbox.Name = $"不允许的元氏: {left}\n已忽略：{right}"; WindowsManager2<右下角累加通知>.Show(App.DCbox); continue; }
                     Submit_添加(left, right, sex, ref j, ref change);
                 }
                 else
                 {
-                    if (元氏表.Contains(right) == false) { throw new Exception($"不允许的元氏: {right}"); }
+                    if (元氏表.Contains(right) == false) { App.DCbox.Name = $"不允许的元氏: {right}\n已忽略：{left}"; WindowsManager2<右下角累加通知>.Show(App.DCbox);continue; }
                     Submit_添加(right, left, sex, ref j, ref change);
                 }
-                //j += 1;
-                //tb1.Text = "";
-                //tb2.Text = "";
             }
             //MessageBox.Show($"完成！新增{j}条记录。");
             MessageBoxResult result = MessageBox.Show($"新增{j}条记录。\n\n【确定】-> 完成录入 \n【取消】-> 回滚", "完成！", MessageBoxButton.OKCancel);
@@ -217,7 +214,7 @@ namespace 绛亽束彖园络管理系统
                 PublicFunctions.快速清空表记录(ref t);
             }
             catch (Exception ex)
-            { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox);; }
+            { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox); }
         }
 
         private void cb_db_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

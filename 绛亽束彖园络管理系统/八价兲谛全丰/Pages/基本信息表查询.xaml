@@ -17,13 +17,6 @@
                 <RowDefinition Height="30" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <!--<TextBlock
-                Grid.Row="0"
-                Margin="2"
-                HorizontalAlignment="Center"
-                FontSize="16">
-                基本信息表查询
-            </TextBlock>-->
 
             <ScrollViewer
                 x:Name="scrolls"
@@ -41,9 +34,6 @@
                             Margin="60,5"
                             HorizontalAlignment="Center"
                             Orientation="Horizontal">
-                            <!--<TextBlock>
-                        数据库名
-                    </TextBlock>-->
                             <ComboBox
                                 x:Name="tb1"
                                 Width="{Binding ElementName=tb4, Path=MaxWidth}"
@@ -59,9 +49,6 @@
                                 PreviewMouseWheel="tb1_PreviewMouseWheel"
                                 SelectionChanged="tb1_SelectionChanged"
                                 Style="{StaticResource MaterialDesignComboBox}" />
-                            <!--<TextBlock>
-                        表名
-                    </TextBlock>-->
                             <ComboBox
                                 x:Name="tb2"
                                 Width="{Binding ElementName=tb4, Path=MaxWidth}"

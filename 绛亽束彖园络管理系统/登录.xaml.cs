@@ -208,6 +208,8 @@ namespace 绛亽束彖园络管理系统
                         App.DCbox.Name = "无法访问，请检查网络连接";
                         WindowsManager2<右下角累加通知>.Show(App.DCbox); install.IsEnabled = true; return;
                     }
+                    App.DCbox.Name = "开始下载，请稍后...";
+                    WindowsManager2<右下角累加通知>.Show(App.DCbox);
                     await HttpClientHelper.DownloadFile("https://go.microsoft.com/fwlink/?linkid=866658", fi);
                 }
                 catch (Exception ex)

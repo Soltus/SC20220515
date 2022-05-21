@@ -4,13 +4,167 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:绛亽束彖园络管理系统"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="基本信息表集合运算"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
 
+
     <Viewbox>
-        <Grid Background="#dee3f4" />
+        <Grid Background="#dee3f4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <ScrollViewer
+                x:Name="scrolls"
+                Grid.Row="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                FontSize="20"
+                HorizontalScrollBarVisibility="Visible"
+                VerticalScrollBarVisibility="Hidden">
+                <ScrollViewer.Content>
+                    <StackPanel Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <WrapPanel
+                            Margin="60,5"
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal">
+                            <ComboBox
+                                x:Name="tb1"
+                                Width="{Binding ElementName=tb4, Path=MaxWidth}"
+                                Height="50"
+                                MaxWidth="400"
+                                Margin="20"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                materialDesign:HintAssist.Hint="数据库名"
+                                FontSize="20"
+                                IsEditable="False"
+                                IsTextSearchEnabled="True"
+                                PreviewMouseWheel="tb1_PreviewMouseWheel"
+                                SelectionChanged="tb1_SelectionChanged"
+                                Style="{StaticResource MaterialDesignComboBox}" />
+                            <ComboBox
+                                x:Name="tb2"
+                                Width="{Binding ElementName=tb4, Path=MaxWidth}"
+                                Height="50"
+                                MaxWidth="400"
+                                Margin="20"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                materialDesign:HintAssist.Hint="表名"
+                                FontSize="20"
+                                IsEditable="True"
+                                IsTextSearchEnabled="True"
+                                PreviewMouseWheel="tb2_PreviewMouseWheel"
+                                SelectionChanged="tb2_SelectionChanged"
+                                Style="{StaticResource MaterialDesignComboBox}" />
+                            <ComboBox
+                                x:Name="tb2_1"
+                                Width="{Binding ElementName=tb4, Path=MaxWidth}"
+                                Height="50"
+                                MaxWidth="400"
+                                Margin="20"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                materialDesign:HintAssist.Hint="表名"
+                                FontSize="20"
+                                IsEditable="True"
+                                IsTextSearchEnabled="True"
+                                PreviewMouseWheel="tb2_PreviewMouseWheel"
+                                SelectionChanged="tb2_SelectionChanged"
+                                Style="{StaticResource MaterialDesignComboBox}" />
+                        </WrapPanel>
+                        <TextBlock
+                            x:Name="tb3"
+                            Margin="5"
+                            Style="{StaticResource MaterialDesignHelperTextBlock}" />
+
+                        <StackPanel x:Name="canhide">
+                            <UniformGrid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Button
+                                    x:Name="bt1"
+                                    Width="240"
+                                    Click="bt1_Click">
+                                    补集查询
+                                </Button>
+                                <Button Width="{Binding ElementName=bt1, Path=Width}" Click="Button_Click">交集查询</Button>
+                                <Button Width="{Binding ElementName=bt1, Path=Width}" Click="Button_Click_1">并集查询</Button>
+                                <Button Width="{Binding ElementName=bt1, Path=Width}" Click="Button_Click_2">补集查询（排序）</Button>
+                                <Button Width="{Binding ElementName=bt1, Path=Width}" Click="Button_Click_3">交集查询（排序）</Button>
+                                <Button Width="{Binding ElementName=bt1, Path=Width}" Click="Button_Click_4">并集查询（排序）</Button>
+                                <Button Width="{Binding ElementName=bt1, Path=Width}" Click="Button_Click_5">跨表迁移记录</Button>
+                            </UniformGrid>
+
+                        </StackPanel>
+                        <Expander
+                            x:Name="e查询结果"
+                            Background="#dee3f4"
+                            Collapsed="e查询结果_Collapsed"
+                            ExpandDirection="up"
+                            Expanded="e查询结果_Expanded"
+                            Header="查询结果"
+                            IsExpanded="False">
+                            <Grid>
+                                <WrapPanel
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Top"
+                                    Orientation="Horizontal"
+                                    Style="{x:Null}">
+                                    <DataGrid
+                                        Name="dg1"
+                                        Width="Auto"
+                                        Height="0"
+                                        MinWidth="300"
+                                        MaxHeight="500"
+                                        Margin="10,10,0,0"
+                                        HeadersVisibility="All"
+                                        IsTextSearchEnabled="True"
+                                        VirtualizingPanel.VirtualizationMode="Standard" />
+                                    <DataGrid
+                                        Name="dg2"
+                                        Width="Auto"
+                                        Height="0"
+                                        MinWidth="{Binding ElementName=dg1, Path=MinWidth, Mode=TwoWay}"
+                                        MaxHeight="{Binding ElementName=dg1, Path=MaxHeight, Mode=TwoWay}"
+                                        Margin="10,10,0,0"
+                                        HeadersVisibility="All"
+                                        IsTextSearchEnabled="True"
+                                        VirtualizingPanel.VirtualizationMode="Standard" />
+                                    <DataGrid
+                                        Name="dg3"
+                                        Width="Auto"
+                                        Height="0"
+                                        MinWidth="{Binding ElementName=dg1, Path=MinWidth, Mode=TwoWay}"
+                                        MaxHeight="{Binding ElementName=dg1, Path=MaxHeight, Mode=TwoWay}"
+                                        Margin="10,10,0,0"
+                                        HeadersVisibility="All"
+                                        ItemsSource="{Binding ElementName=dg1, Path=ItemsSource, Mode=TwoWay}"
+                                        VirtualizingPanel.VirtualizationMode="Standard"
+                                        Visibility="Collapsed" />
+                                    <DataGrid
+                                        Name="dg4"
+                                        Width="Auto"
+                                        Height="0"
+                                        MinWidth="{Binding ElementName=dg1, Path=MinWidth, Mode=TwoWay}"
+                                        MaxHeight="{Binding ElementName=dg1, Path=MaxHeight, Mode=TwoWay}"
+                                        Margin="10,10,0,0"
+                                        HeadersVisibility="All"
+                                        ItemsSource="{Binding ElementName=dg2, Path=ItemsSource, Mode=TwoWay}"
+                                        VirtualizingPanel.VirtualizationMode="Standard"
+                                        Visibility="Collapsed" />
+                                </WrapPanel>
+                            </Grid>
+                        </Expander>
+                    </StackPanel>
+                </ScrollViewer.Content>
+            </ScrollViewer>
+        </Grid>
     </Viewbox>
 </Page>

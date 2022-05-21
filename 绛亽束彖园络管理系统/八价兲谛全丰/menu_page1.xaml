@@ -37,15 +37,13 @@
                     </Hyperlink>
                 </TextBlock>
                 <TextBlock Margin="{Binding ElementName=tb1, Path=Margin}" TextWrapping="Wrap">
-                    <Hyperlink
-                        x:Name="基本信息表查询"
-                        NavigateUri="Pages/基本信息表查询.xaml">
+                    <Hyperlink x:Name="基本信息表查询" NavigateUri="Pages/基本信息表查询.xaml">
                         基本信息表查询
                     </Hyperlink>
                 </TextBlock>
                 <TextBlock Margin="{Binding ElementName=tb1, Path=Margin}" TextWrapping="Wrap">
                     <Hyperlink x:Name="基本信息表集合运算" NavigateUri="Pages/基本信息表集合运算.xaml">
-                        基本信息表集合运算（将在后续版本实现）
+                        基本信息表集合运算
                     </Hyperlink>
                 </TextBlock>
             </WrapPanel>

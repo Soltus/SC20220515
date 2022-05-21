@@ -13,8 +13,8 @@ namespace 绛亽束彖园络管理系统
     /// </summary>
     public partial class 基本信息名单表录入 : Page
     {
-        List<string> 元氏表 = PublicDataClass.元氏表;
-        Server Ins = PublicDataClass.Instance;
+        readonly List<string> 元氏表 = PublicDataClass.元氏表;
+        readonly Server Ins = PublicDataClass.Instance;
 
 
         private delegate void UpdateProgressBarDelegate(System.Windows.DependencyProperty dp, Object value);
@@ -165,8 +165,8 @@ namespace 绛亽束彖园络管理系统
                 }
                 else { MessageBox.Show($"无效数据{ii}"); continue; }
                 if (left == "" || right == "") { throw new Exception("不能为空"); }
-                Regex rx = new Regex("^[\u4e00-\u9fa5]$");
-                if (rx.IsMatch(ii.Substring(0, 1)))
+                Regex rx = new("^[\u4e00-\u9fa5]$");
+                if (rx.IsMatch(ii[..1]))
                 {
                     if (元氏表.Contains(left) == false) { App.DCbox.Name = $"不允许的元氏: {left}\n已忽略：{right}"; WindowsManager2<右下角累加通知>.Show(App.DCbox); continue; }
                     Submit_添加(left, right, sex, ref j, ref change);

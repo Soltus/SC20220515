@@ -585,19 +585,21 @@ namespace 绛亽束彖园络管理系统
             foreach (var table in ds.Tables)
             {
                 DataTable tbl = table as DataTable;
-                //foreach (var column in tbl.Columns)
-                //{
-                //    DataColumn col = column as DataColumn;
-                //    sb.Append(col.ColumnName + " ");
-                //}
+                Regex rx = new("^[\u4e00-\u9fa5]$");
                 sb.AppendLine();
                 foreach (var row in tbl.Rows)
                 {
                     DataRow dr = row as DataRow;
+                    string name = "";
                     for (int i = 0; i < dr.ItemArray.Count(); i++)
                     {
-                        sb.Append(dr.ItemArray[i].ToString() + "⁒");
+                        name = name + dr.ItemArray[i].ToString() + "⁒";
                     }
+                    if (!rx.IsMatch(name[..1]))
+                    {
+                        name = $"{name.Split("⁒")[1]}⁒{name.Split("⁒")[0]}⁒{name.Split("⁒")[2]}⁒"; // 英文名
+                    }
+                    sb.Append(name);
                     sb.AppendLine();
                 }
                 sb.AppendLine();

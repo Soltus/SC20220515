@@ -1,6 +1,7 @@
 ﻿using Microsoft.SqlServer.Management.Smo;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -90,6 +91,11 @@ namespace 绛亽束彖园络管理系统
             string str = Clipboard.GetText(TextDataFormat.UnicodeText);
             string[] sArray = str.Split(new char[3] { '\t', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
             int j = 0;
+            if (tb_表名.Text == "") { return; }
+            Database db1 = PublicDataClass.Instance.Databases[$"{cb_db.Text}"];
+            if (db1.Tables[tb_表名.Text].Columns.Contains("元氏") == false) { return; }
+            DataSet ds = db1.ExecuteWithResults($"select COUNT(*) from [{tb_表名.Text}];");
+            int before = (int)ds.Tables[0].Rows[0][0];
             foreach (string i in sArray)
             {
                 string ii = i.Replace("\n", "").Trim();
@@ -107,15 +113,15 @@ namespace 绛亽束彖园络管理系统
                 try
                 {
                     if (left == "" || right == "") { throw new Exception("不能为空"); }
-                    Regex rx = new Regex("^[\u4e00-\u9fa5]$");
-                    if (rx.IsMatch(ii.Substring(0, 1)))
+                    Regex rx = new("^[\u4e00-\u9fa5]$");
+                    if (rx.IsMatch(ii[..1]))
                     {
-                        if (元氏表.Contains(left) == false) { throw new Exception($"不允许的元氏: {left}"); }
+                        if (!元氏表.Contains(left)) { throw new Exception($"不允许的元氏: {left}\n已忽略：{right}"); }
                         Submit_移除(left, right);
                     }
                     else
                     {
-                        if (元氏表.Contains(right) == false) { throw new Exception($"不允许的元氏: {right}"); }
+                        if (!元氏表.Contains(right)) { throw new Exception($"不允许的元氏: {right}\n已忽略：{left}"); }
                         Submit_移除(right, left);
                     }
                     j += 1;
@@ -123,10 +129,12 @@ namespace 绛亽束彖园络管理系统
                     tb2.Text = "";
                 }
                 catch (Exception ex)
-                { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox);; }
+                { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox); }
 
             }
-            MessageBox.Show($"完成！移除{j}条记录。");
+            ds = db1.ExecuteWithResults($"select COUNT(*) from [{tb_表名.Text}];");
+            int after = (int)ds.Tables[0].Rows[0][0];
+            App.DCbox.Name = $"完成！移除{before - after}条记录。"; WindowsManager2<右下角累加通知>.Show(App.DCbox);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

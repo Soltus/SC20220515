@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -232,9 +233,61 @@ namespace 绛亽束彖园络管理系统
             catch (Exception ex) { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox); }
         }
 
+        // 跨表迁移记录
         private void Button_Click_5(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        // 组成情况
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (tb1.Text == "") { throw new Exception("未指定数据库"); }
+                if (tb2.Text == "" || tb2_1.Text == "") { throw new Exception("未指定数据表"); }
+                Database db1 = PublicDataClass.Instance.Databases[$"{tb1.Text}"];
+                if (db1.Tables[tb2.Text].Columns.Contains("元氏") == false) { throw new Exception("该表未包含元氏列"); }
+                DataSet ds = new();
+                ds = db1.ExecuteWithResults($"select COUNT(*) as 卩 from [{tb2.Text}] where 格叚 = 0;");
+                string y1 = ds.Tables[0].Rows[0][0].ToString();
+                ds = db1.ExecuteWithResults($"select COUNT(*) as 卩 from [{tb2_1.Text}] where 格叚 = 0;");
+                string y2 = ds.Tables[0].Rows[0][0].ToString();
+                ds = db1.ExecuteWithResults($"select COUNT(*) as 卪 from [{tb2.Text}] where 格叚 = 1;");
+                string x1 = ds.Tables[0].Rows[0][0].ToString();
+                ds = db1.ExecuteWithResults($"select COUNT(*) as 卪 from [{tb2_1.Text}] where 格叚 = 1;");
+                string x2 = ds.Tables[0].Rows[0][0].ToString();
+                int xx =  int.Parse(x1) - int.Parse(x2);
+                int yy =  int.Parse(y1) - int.Parse(y2);
+                string repo1 = "   1  ";
+                string repo2 = "   2  ";
+                if (xx == 0) repo1 += $"萝丽丝共 {x1} 格，同上价持平。\n"; else if (xx < 0) repo1 += $"萝丽丝共 {x1} 格，同比减少 {xx} 格。\n" ; else repo1 += $"萝丽丝共 {x1} 格，同比增加 {xx} 格。\n";
+                if (yy == 0) repo2 += $"布鲁斯共 {y1} 格，同上价持平。\n"; else if (yy < 0) repo2 += $"布鲁斯共 {y1} 格，同比减少 {yy} 格。\n" ; else repo2 += $"布鲁斯共 {y1} 格，同比增加 {yy} 格。\n";
+                var results = new StringBuilder("");
+                List<元氏计数> list = new();
+                string si = string.Empty;
+                foreach (string i in PublicDataClass.元氏表)
+                {
+                    string _tt = db1.ExecuteWithResults($"select COUNT(*) from [{tb2.Text}] where 元氏 = '{i}';").Tables[0].Rows[0][0].ToString();
+                    string _tt2 = db1.ExecuteWithResults($"select COUNT(*) from [{tb2_1.Text}] where 元氏 = '{i}';").Tables[0].Rows[0][0].ToString();
+                    int _ff = int.Parse(_tt) - int.Parse(_tt2);
+                    if (_ff == 0) si = $"同上价持平"; else if (_ff < 0) si = $"同比减少 {Math.Abs(_ff)} 格"; else si = $"同比增加 {_ff} 格";
+                    list.Add(new 元氏计数(int.Parse(_tt), i, si));
+                }
+                list = list.OrderByDescending(o => o.数量).ToList();//降序
+                int j = 2;
+                foreach (var i in list)
+                {
+                    //results += i;
+                    j++;
+                    results.Append($" {j.ToString().PadLeft(3)}  ");
+                    results.Append(i.ToAnaString());
+                }
+                Clipboard.SetDataObject(repo1+repo2+results);
+                App.DCbox.Name = $" 组成情况已复制到剪贴板";
+                WindowsManager2<右下角累加通知>.Show(App.DCbox);
+            }
+            catch (Exception ex) { WebView2Controlers.logger.Error(ex.Message); App.DCbox.Name = ex.Message; WindowsManager2<右下角累加通知>.Show(App.DCbox); }
         }
     }
 }

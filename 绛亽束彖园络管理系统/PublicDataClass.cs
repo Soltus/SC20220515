@@ -320,12 +320,15 @@ namespace 绛亽束彖园络管理系统
     {
         private int _数量;
         private string _元氏;
+        private string _si;
 
-        public 元氏计数(int 数量, string 元氏)
+        public 元氏计数(int 数量, string 元氏, string si="")
         {
             this._数量 = 数量;
             this._元氏 = 元氏;
+            _si = si;
         }
+
 
         public int 数量
         {
@@ -358,7 +361,14 @@ namespace 绛亽束彖园络管理系统
         {
             return "元氏: " + _元氏 + String.Empty.PadLeft(10 - PublicFunctions.GetSingleLength(_元氏), ' ') + "   元数: " + _数量 + "  \n";
         }
+
+        // 组成情况
+        public string ToAnaString()
+        {
+            return $"{_元氏}氏 {_数量}格，{_si}。\n";
+        }
     }
+
 
     #region 公共函数
     internal class PublicFunctions

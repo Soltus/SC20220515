@@ -365,7 +365,7 @@ namespace 绛亽束彖园络管理系统
         // 组成情况
         public string ToAnaString()
         {
-            return $"{_元氏}氏 {_数量}格，{_si}。\n";
+            return $"{_元氏}氏 {_数量} 格，{_si}。\n";
         }
     }
 

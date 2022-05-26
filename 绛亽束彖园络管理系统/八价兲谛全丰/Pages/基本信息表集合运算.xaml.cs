@@ -198,7 +198,7 @@ namespace 绛亽束彖园络管理系统
                     ($"declare @tempTable TABLE(元氏 nvarchar(10),名字 nvarchar(10),格叚 bit);insert into @tempTable select * from [{tb2.Text}] intersect select * from [{tb2_1.Text}];select a.元氏,a.名字,a.格叚 from @tempTable as a join (select 元氏,COUNT(*) as 元数 from @tempTable group by 元氏) as b on a.元氏=b.元氏 order by b.元数 desc;");
                 dg1.ItemsSource = ds.Tables[0].DefaultView;
                 dg2.ItemsSource = ds.Tables[0].DefaultView;
-                string dataSetContent = $"--- {tb2.Text} {tb2_1.Text} 共有（{ds.Tables[0].Rows.Count}） ---\n";
+                string dataSetContent = $"--- {tb2.Text}继承（{ds.Tables[0].Rows.Count}） ---\n";
                 dataSetContent += ds.元氏DSToString();
                 Clipboard.SetDataObject(dataSetContent.Trim());
                 App.DCbox.Name = $" 交集查询（排序）已复制到剪贴板";

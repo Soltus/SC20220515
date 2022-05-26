@@ -74,7 +74,6 @@ namespace 绛亽束彖园络管理系统
         // App.config 文件
         readonly public static System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.None);
 
-
     }
 
 

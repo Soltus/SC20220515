@@ -163,6 +163,16 @@ namespace 绛亽束彖园络管理系统
         private static string _副窗口标题 = "";
         private static Uri _Uri = new("pack://application:,,,/绛亽束彖园络管理系统;component/八价兲谛全丰/menu_page1.xaml");
         private static string _UriString = "pack://application:,,,/绛亽束彖园络管理系统;component/八价兲谛全丰/menu_page1.xaml";
+        private static Uri _Rhost_frame_soure = new("pack://application:,,,/绛亽束彖园络管理系统;component/八价兲谛全丰/V名称填写.xaml");
+
+        public static Uri Rhost_frame_soure { get { return _Rhost_frame_soure; }
+            set
+            {
+                _Rhost_frame_soure = value;
+                //通知
+                StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(Rhost_frame_soure)));
+            }
+        }
 
         public static string 窗口标题
         {

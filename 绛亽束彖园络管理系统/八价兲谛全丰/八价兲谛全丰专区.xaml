@@ -330,6 +330,10 @@
                     Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
                     Content="CLOSE ALL"
                     Style="{StaticResource MaterialDesignFlatButton}" />
+                <Frame
+                    x:Name="Rhost_frame"
+                    NavigationUIVisibility="Hidden"
+                    Source="{Binding Source={StaticResource WinTitle}, Path=Rhost_frame_soure, Mode=OneWay}" />
             </StackPanel>
         </materialDesign:DrawerHost.RightDrawerContent>
         <materialDesign:DrawerHost.BottomDrawerContent>
